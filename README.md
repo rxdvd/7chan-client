@@ -19,6 +19,10 @@ Client-side for group project working on an anonymous community journaling websi
 * `npm run dev` to run the server with [`watchify`](https://www.npmjs.com/package/watchify) and `python http.server`
 * `npm run bundle` to build a javascript bundle using [`browserify`](https://www.npmjs.com/package/browserify)
 
+### Deployment
+
+This client is currently deployed at https://goofy-keller-23f686.netlify.app/
+
 ## Project Goal
 
 Build a website where users can anonymously post journal entries for other people to see, comment on and react to using emojis.
