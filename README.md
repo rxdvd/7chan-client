@@ -15,6 +15,7 @@ Client-side for group project working on an anonymous community journaling websi
    
 * `npm start` to run the server using [`python http.server`](https://docs.python.org/3/library/http.server.html#http-server-cli)
 * `npm test` to run tests contained in `test/` directory
+* `npm run coverage` to check test coverage
 * `npm run dev` to run the server with [`watchify`](https://www.npmjs.com/package/watchify) and `python http.server`
 * `npm run bundle` to build a javascript bundle using [`browserify`](https://www.npmjs.com/package/browserify)
 
