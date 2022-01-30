@@ -2,8 +2,8 @@
 
 <!-- badges -->
 [![ISC license](https://img.shields.io/badge/License-ISC-blue.svg)](https://www.isc.org/licenses/)
-[![GitHub latest commit](https://badgen.net/github/last-commit/rxdvd/7chan-client)](https://github.com/rxdvd/7chan-client/commit/)
-[![GitHub forks](https://img.shields.io/github/forks/rxdvd/7chan-client.svg?style=social&label=Fork&maxAge=2592000)](https://github.com/rxdvd/7chan-client)
+[![GitHub latest commit](https://img.shields.io/github/last-commit/rxdvd/7chan-client.svg)](https://github.com/rxdvd/7chan-client/commit/)
+[![GitHub forks](https://img.shields.io/github/forks/rxdvd/7chan-client.svg)](https://github.com/rxdvd/7chan-client)
 
 Client-side for group project working on an anonymous community journaling website.
 
