@@ -10,6 +10,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 </head>
 <body>
+    <!-- Single post display -->
+    <div id="single-post" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="single-post-title" class="modal-title">Post title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            <div id="single-post-body" class="modal-body">
+                Post content
+            </div>
+            <div id="single-post-comments" class="modal-body">
+                Comments
+            </div>
+            </div>
+        </div>
+    </div>
     <!-- Giphy selector -->
     <div id="giphy" class="modal fade" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -90,7 +107,7 @@
                         <button class="btn btn-dark">6 👍</button>
                         <button class="btn btn-light">0 👎</button>
                         <button class="btn btn-light">3 ❤</button>
-                        <a class="btn btn-outline-secondary" href="#!">Comments (1)</a>
+                        <a class="btn btn-outline-secondary" href="#!" data-bs-toggle="modal" data-bs-target="#single-post">Comments (1)</a>
                     </div>
                 </div>
                 <div class="card mb-3">
@@ -102,7 +119,7 @@
                         <button class="btn btn-dark">6 👍</button>
                         <button class="btn btn-light">0 👎</button>
                         <button class="btn btn-light">3 ❤</button>
-                        <a class="btn btn-outline-secondary" href="#!">Comments (7)</a>
+                        <a class="btn btn-outline-secondary" href="#!" data-bs-toggle="modal" data-bs-target="#single-post">Comments (7)</a>
                     </div>
                 </div>
                 <!-- Pagination-->
