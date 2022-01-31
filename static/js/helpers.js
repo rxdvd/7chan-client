@@ -1,5 +1,4 @@
-
-
+const APIKEY = "TLvi8tf9k2z6WmKQm73BO1RIXRoaZzmL"
 const getAllPosts = async () => {
   try {
     const response = await fetch("http://localhost:3000/posts");
@@ -68,3 +67,18 @@ const submitcomment = async (e) => {
       console.error(err);
     }
 };
+
+
+
+const gifSearch = document.querySelector("#giphy-search-btn")
+
+gifSearch.addEventListener('click', getGiphs)
+
+const getGiphs = async (e) => {
+    
+    const searchTerm = e.key
+    gifSearch.value = searchTerm
+    console.log(gifSearch.value)
+    // let url = `https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}`
+
+}
