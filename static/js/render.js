@@ -21,6 +21,9 @@ function appendPost(postData){
     let time = document.createElement("div");
     let title = document.createElement("h2");
     let message = document.createElement("p");
+    let thumbsUpBtn = document.createElement("button");
+    let thumbsDownBtn = document.createElement("button");
+    let heartBtn = document.createElement("button");
 
     time.className = "small text-muted";
     title.className = "card-title";
@@ -28,3 +31,7 @@ function appendPost(postData){
     //to-do: 3 buttons and comments button
     
 }
+
+module.exports = {
+    appendPost
+};

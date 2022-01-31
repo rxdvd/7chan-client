@@ -1,4 +1,7 @@
+const { appendPost } = require("./render");
+
 const APIKEY = "TLvi8tf9k2z6WmKQm73BO1RIXRoaZzmL";
+
 const getAllPosts = async () => {
   try {
     const response = await fetch("http://localhost:3000/posts");
@@ -18,9 +21,9 @@ const submitPost = async (e) => {
 
   try {
     const postData = {
-      title: e.target.value,
-      message: e.target.value,
-      giphy: e.target.value,
+      title: e.target.title.value,
+      message: e.target.message.value,
+      giphy: e.target.giphy.value,
     };
 
     const options = {
