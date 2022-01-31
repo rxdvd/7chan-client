@@ -1,4 +1,4 @@
-const {getGiphs,submitPost} = require('./helpers')
+const { getGiphs, submitPost } = require("./helpers");
 
 function init() {
   const postForm = document.querySelector("#post-form");
@@ -6,9 +6,8 @@ function init() {
   const gifSearch = document.querySelector("#giphy-search");
 
   gifSearch.addEventListener("submit", getGiphs);
-
   postForm.addEventListener("submit", submitPost);
-  gifBtn.addEventListener("click", loadGiphy);
+  //   gifBtn.addEventListener("click", loadGiphy);
 }
 
 init();
