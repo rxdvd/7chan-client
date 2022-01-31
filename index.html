@@ -45,7 +45,7 @@
                         <form id="comment-form">
                             <div class="mb-3">
                                 <label for="comment-form-message" class="form-label fw-bold">Post a comment:</label>
-                                <textarea class="form-control" id="comment-form-message" placeholder="Leave a comment..." rows="3"></textarea>
+                                <textarea class="form-control" id="comment-form-message" name="message" placeholder="Leave a comment..." rows="3"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -117,13 +117,18 @@
                     <h2>What's on your mind?</h2>
                     <div class="mb-3">
                         <label for="post-form-title" class="form-label">Title</label>
-                        <input type="text" class="form-control" placeholder="What do you want to talk about?" id="post-form-title">
+                        <input type="text" name="title" class="form-control" placeholder="What do you want to talk about?" id="post-form-title">
                     </div>
                     <div class="mb-3">
                         <label for="post-form-message" class="form-label">Message</label>
-                        <textarea class="form-control" id="post-form-message" placeholder="Share your stories, tips, questions, etc." rows="3"></textarea>
+                        <textarea class="form-control" id="post-form-message" name="message" placeholder="Share your stories, tips, questions, etc." rows="3"></textarea>
                     </div>
                     <div class="mb-3">
+                        <a class="giphy-thumbnail" href="">
+                            <img class="mb-2" draggable="false" src="https://media0.giphy.com/media/d3erWmTEGXoiYVgY/100.gif?cid=5c2583098j8m18kl0gh9xq3wv558ovtq7d8ykr71wna9ycwg&rid=100.gif&ct=g">
+                        </a>
+                        <br/>
+                        <input type="hidden" id="giphy-input" name="giphy" value="">
                         <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#giphy">add a Giphy</button>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
