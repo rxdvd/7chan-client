@@ -1,16 +1,16 @@
-# 7chan-client
+# coderunner-client
 
 <!-- badges -->
 [![ISC license](https://img.shields.io/badge/License-ISC-blue.svg)](https://www.isc.org/licenses/)
-[![GitHub latest commit](https://img.shields.io/github/last-commit/rxdvd/7chan-client.svg)](https://github.com/rxdvd/7chan-client/commit/)
-[![GitHub forks](https://img.shields.io/github/forks/rxdvd/7chan-client.svg)](https://github.com/rxdvd/7chan-client)
+[![GitHub latest commit](https://img.shields.io/github/last-commit/rxdvd/coderunner-client.svg)](https://github.com/rxdvd/coderunner-client/commit/)
+[![GitHub forks](https://img.shields.io/github/forks/rxdvd/coderunner-client.svg)](https://github.com/rxdvd/coderunner-client)
 
 Client-side for group project working on an anonymous community journaling website.
 
 ## Installation & Usage
 
 1. Clone this repo using `git clone`
-2. Enter the directory `cd 7chan-client`
+2. Enter the directory `cd coderunner-client`
 3. Install dependencies `npm install`
    
 * `npm start` to run the server using [`python http.server`](https://docs.python.org/3/library/http.server.html#http-server-cli)
