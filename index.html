@@ -10,6 +10,22 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 </head>
 <body>
+    <!-- Giphy selector -->
+    <div id="giphy" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+            <div class="modal-header">
+                <input id="giphy-search" class="form-control px-2" type="search" placeholder="Search for gifs..." aria-label="Search">
+            </div>
+            <div id="giphy-body" class="modal-body">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
     <!-- Responsive navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -60,7 +76,7 @@
                         <textarea class="form-control" id="post-form-message" placeholder="Share your stories, tips, questions, etc." rows="3"></textarea>
                     </div>
                     <div class="mb-3">
-                        <button type="button" class="btn btn-secondary btn-sm">add a Giphy</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#giphy">add a Giphy</button>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
