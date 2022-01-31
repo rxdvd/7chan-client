@@ -33,6 +33,7 @@ function renderReactions(postData){
         }else{
             btn.classList.add('btn-light');
         }
+        btn.textContent = `${postData.reactions[emoji[1]].length} ${emoji[0]}`;
         return btn;
     });
 
@@ -86,6 +87,11 @@ function appendPost(postData){
     post.appendChild(postBody);
     form.insertAdjacentElement('afterend', post);
 }
+
+// function renderSinglePost(postData){
+//     const singlePost = document.querySelector("#single-post");
+
+// }
 
 module.exports = {
     appendPost
