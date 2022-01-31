@@ -1,3 +1,4 @@
+const { submitForm, getAllPosts } = require("./helpers");
 
 function init(){
     const postForm = document.querySelector("#post-form");
@@ -5,6 +6,7 @@ function init(){
 
     postForm.addEventListener('submit', submitForm);
     gifBtn.addEventListener('click', loadGiphy);
+    getAllPosts();
 }
 
-// init();
+init();
