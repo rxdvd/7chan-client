@@ -123,7 +123,8 @@ module.exports = {
 };
 
 },{"./render":3}],2:[function(require,module,exports){
-const { getGiphs, submitPost } = require("./helpers");
+const { getAllPosts, getGiphs, submitPost } = require("./helpers");
+const { clearPosts } = require("./render");
 
 function init() {
   const postForm = document.querySelector("#post-form");
@@ -133,11 +134,15 @@ function init() {
   gifSearch.addEventListener("submit", getGiphs);
   postForm.addEventListener("submit", submitPost);
   //   gifBtn.addEventListener("click", loadGiphy);
+
+  // load posts
+  clearPosts();
+  getAllPosts();
 }
 
 init();
 
-},{"./helpers":1}],3:[function(require,module,exports){
+},{"./helpers":1,"./render":3}],3:[function(require,module,exports){
 function renderDateString(timestamp){
     let date = new Date(parseInt(timestamp));
     let months = [
@@ -145,7 +150,7 @@ function renderDateString(timestamp){
         "May", "June", "July", "August", "September",
         "October", "November", "December"
     ];
-    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${(date.getHours() % 12) + 1} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${(date.getHours() % 12) + 1}:${("00" + date.getMinutes()).slice(-2)} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
 }
 
 function renderPostHeader(postData, modal=false){
@@ -227,7 +232,9 @@ function renderPostBody(postData, modal=false){
     postBody.appendChild(message);
 
     let reactionBtns = renderReactions(postData);
-    reactionBtns.forEach(postBody.appendChild);
+    reactionBtns.forEach(reaction => {
+        postBody.appendChild(reaction);
+    });
 
     if(!modal){
         postBody.classList.replace("card-body", "modal-body");
@@ -235,7 +242,7 @@ function renderPostBody(postData, modal=false){
         message.classList.remove("card-text");
 
         let title = renderPostHeader(postData);
-        postBody.insertBefore(message, title);
+        postBody.insertBefore(title, message);
 
         let commentsBtn = document.createElement("button");
         commentsBtn.classList.add('btn', 'btn-outline-secondary');
@@ -243,7 +250,7 @@ function renderPostBody(postData, modal=false){
         commentsBtn.setAttribute('data-bs-toggle', 'modal');
         commentsBtn.setAttribute('data-bs-target', '#single-post');
         commentsBtn.textContent = `Comments (${postData.comments.length})`;
-        postBody.appendChild(commentBtn);
+        postBody.appendChild(commentsBtn);
     }
 
     return postBody;
@@ -252,7 +259,7 @@ function renderPostBody(postData, modal=false){
 function clearPosts(){
     let posts = document.querySelectorAll('.post');
     Array.from(posts).forEach(post => {
-        post.parentElement.removeChlid(post);
+        post.parentElement.removeChild(post);
     });
 }
 
@@ -331,7 +338,9 @@ function renderComments(postData){
 
     // comments
     let comments = postData.comments.map(renderComment);
-    comments.forEach(container.appendChild);
+    comments.forEach(comment => {
+        container.appendChild(comment);
+    });
 
     // form
     let commentForm = renderCommentsForm();
