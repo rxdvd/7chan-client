@@ -43,10 +43,12 @@ const appendGif = (gif) => {
 };
 
 const addGif = (e) => {
-let selectedGif = e.target;
+  let selectedGif = e.target;
   const thumbnailParent = document.querySelector(".removable-gif")
   thumbnailParent.innerHTML = ""
   thumbnailParent.appendChild(selectedGif)
+  const giphyInput = document.querySelector("#giphy-input");
+  giphyInput.value = selectedGif.src;
 };
 
 module.exports = {
