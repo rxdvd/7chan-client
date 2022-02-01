@@ -86,9 +86,8 @@ const getGiphs = async (e) => {
   const json = await response.json();
   const gifArr = json.data;
   let modalBody = document.querySelector("#giphy-body");
-  modalBody.innerHTML = ''
+  modalBody.innerHTML = "";
   renderGif(gifArr);
-  
 };
 
 const appendGif = (gif) => {
@@ -103,15 +102,10 @@ const appendGif = (gif) => {
 };
 
 const addGif = (e) => {
-  console.log("gif url:", e.target.src);
-  let gifThumnail = document.querySelector(".giphy-thumbnail");
-  gifThumnail.style.display = "none";
-  let gifUrl = e.target.src;
-  let gifThumnailUrl = gifThumnail.src;
-  gifThumnailUrl.value = gifUrl;
-  gifThumnail.style.display = "block";
-  console.log(gifThumnail);
-  return gifThumnailUrl;
+let selectedGif = e.target;
+  const thumbnailParent = document.querySelector(".removable-gif")
+  thumbnailParent.innerHTML = ""
+  thumbnailParent.appendChild(selectedGif)
 };
 
 module.exports = {
