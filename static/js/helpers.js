@@ -97,8 +97,7 @@ const appendGif = (gif) => {
   newImg.src = gifUrl;
   newImg.className = "giphy-preview mb-2";
   modalBody.insertAdjacentElement("afterbegin", newImg);
-  const selectGif = document.querySelector(".giphy-preview.mb-2");
-  selectGif.addEventListener("click", addGif);
+  newImg.addEventListener("click", addGif);
 };
 
 const addGif = (e) => {
