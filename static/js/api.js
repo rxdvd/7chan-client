@@ -4,7 +4,7 @@ const APIKEY = "TLvi8tf9k2z6WmKQm73BO1RIXRoaZzmL";
 
 const getAllPosts = async () => {
     try {
-        const response = await fetch("http://localhost:3000/posts");
+        const response = await fetch("https://coderunner-blog.herokuapp.com/posts");
         const data = await response.json();
         setPost(data); // function that iterates through post data
     } catch (err) {
@@ -28,7 +28,7 @@ const submitPost = async (e) => {
             headers: { "Content-Type": "application/json" },
         };
 
-        const response = await fetch("http://localhost:3000/posts", options);
+        const response = await fetch("https://coderunner-blog.herokuapp.com/posts", options);
 
         const json = await response.json();
 
@@ -56,7 +56,7 @@ const submitComment = async (e) => {
         };
     
         const response = await fetch(
-            `http://localhost:3000/posts/${pid}/comments`,
+            `https://coderunner-blog.herokuapp.com/posts/${pid}/comments`,
             options
         );
     
