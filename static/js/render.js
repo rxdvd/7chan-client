@@ -117,6 +117,7 @@ function renderPostBody(postData, modal=false){
 
 function renderCommentsForm(){
     let form = document.createElement("form");
+    form.id = "comment-form";
 
     let formBody = document.createElement("div");
     formBody.classList.add("mb-3");

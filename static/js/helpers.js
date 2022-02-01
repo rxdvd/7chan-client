@@ -39,20 +39,14 @@ const appendGif = (gif) => {
   newImg.src = gifUrl;
   newImg.className = "giphy-preview mb-2";
   modalBody.insertAdjacentElement("afterbegin", newImg);
-  const selectGif = document.querySelector(".giphy-preview.mb-2");
-  selectGif.addEventListener("click", addGif);
+  newImg.addEventListener("click", addGif);
 };
 
 const addGif = (e) => {
-  console.log("gif url:", e.target.src);
-  let gifThumnail = document.querySelector(".giphy-thumbnail");
-  gifThumnail.style.display = "none";
-  let gifUrl = e.target.src;
-  let gifThumnailUrl = gifThumnail.src;
-  gifThumnailUrl.value = gifUrl;
-  gifThumnail.style.display = "block";
-  console.log(gifThumnail);
-  return gifThumnailUrl;
+let selectedGif = e.target;
+  const thumbnailParent = document.querySelector(".removable-gif")
+  thumbnailParent.innerHTML = ""
+  thumbnailParent.appendChild(selectedGif)
 };
 
 module.exports = {
