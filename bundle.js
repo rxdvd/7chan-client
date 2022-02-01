@@ -86,16 +86,33 @@ const getGiphs = async (e) => {
   const response = await fetch(url);
   const json = await response.json();
   const gifArr = json.data;
+  let modalBody = document.querySelector("#giphy-body");
+  modalBody.innerHTML = ''
   renderGif(gifArr);
+  
 };
 
 const appendGif = (gif) => {
+  let modalBody = document.querySelector("#giphy-body");
   const newImg = document.createElement("img");
   let gifUrl = gif.images.downsized.url;
   newImg.src = gifUrl;
   newImg.className = "giphy-preview mb-2";
-  let modalBody = document.querySelector("#giphy-body");
   modalBody.insertAdjacentElement("afterbegin", newImg);
+  const selectGif = document.querySelector(".giphy-preview.mb-2");
+  selectGif.addEventListener("click", addGif);
+};
+
+const addGif = (e) => {
+  console.log("gif url:", e.target.src);
+  let gifThumnail = document.querySelector(".giphy-thumbnail");
+  gifThumnail.style.display = "none";
+  let gifUrl = e.target.src;
+  let gifThumnailUrl = gifThumnail.src;
+  gifThumnailUrl.value = gifUrl;
+  gifThumnail.style.display = "block";
+  console.log(gifThumnail);
+  return gifThumnailUrl;
 };
 
 module.exports = {
@@ -121,7 +138,8 @@ function init() {
 init();
 
 },{"./helpers":1}],3:[function(require,module,exports){
-function renderDateString(date){
+function renderDateString(timestamp){
+    let date = new Date(parseInt(timestamp));
     let months = [
         "January", "February", "March", "April",
         "May", "June", "July", "August", "September",
@@ -130,11 +148,42 @@ function renderDateString(date){
     return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${(date.getHours() % 12) + 1} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
 }
 
-function renderGiph(postData){
+function renderPostHeader(postData, modal=false){
+    let heading = document.createElement(modal ? "h5" : "h2");
+
+    heading.classList.add("card-title");
+    heading.textContent = postData.title;
+
+    if(modal) {
+        let header = document.createElement("div");
+        let closeBtn = document.createElement("button");
+
+        header.classList.add("modal-header", "border-0", "pb-0");
+        heading.classList.replace("card-title", "modal-title");
+        closeBtn.classList.add("btn-close");
+
+        closeBtn.setAttribute('type', 'button');
+        closeBtn.setAttribute('data-bs-dismiss', 'modal');
+        closeBtn.setAttribute('aria-label', 'Close');
+
+        header.appendChild(heading);
+        header.appendChild(closeBtn);
+        
+        return header;
+    }
+
+    return heading;
+}
+
+function renderGiph(postData, modal=false){
     let gifContainer = document.createElement("a");
     let gif = document.createElement("img");
 
     gif.classList.add('card-img-top');
+    if(modal) {
+        gif.classList.add('mb-1');
+    }
+
     gif.setAttribute('alt', 'Image from Giphy');
     gif.src = postData.giphy;
 
@@ -163,36 +212,48 @@ function renderReactions(postData){
     return reactionBtns;
 }
 
-function renderPostBody(postData){
+function renderPostBody(postData, modal=false){
     let postBody = document.createElement("div");
-    let time = document.createElement("div");
-    let title = document.createElement("h2");
-    let message = document.createElement("p");
-    let reactionBtns = renderReactions(postData);
-    let commentsBtn = document.createElement("button");
-
     postBody.classList.add("card-body");
+
+    let time = document.createElement("div");
     time.classList.add("small", "text-muted");
-    title.classList.add("card-title");
-    message.classList.add('card-text');
-    commentsBtn.classList.add('btn', 'btn-outline-secondary');
-
-    commentsBtn.setAttribute('href', '#!');
-    commentsBtn.setAttribute('data-bs-toggle', 'modal');
-    commentsBtn.setAttribute('data-bs-target', '#single-post');
-
-    time.textContent = renderDateString(new Date(postData.time));
-    title.textContent = postData.title;
-    message.textContent = postData.message;
-    commentsBtn.textContent = `Comments (${postData.comments.length})`;
-
+    time.textContent = renderDateString(postData.timestamp);
     postBody.appendChild(time);
-    postBody.appendChild(title);
+
+    let message = document.createElement("p");
+    message.classList.add('card-text');
+    message.textContent = postData.message;
     postBody.appendChild(message);
+
+    let reactionBtns = renderReactions(postData);
     reactionBtns.forEach(postBody.appendChild);
-    postBody.appendChild(commentBtn);
+
+    if(!modal){
+        postBody.classList.replace("card-body", "modal-body");
+        time.classList.add("mb-1", "text-end");
+        message.classList.remove("card-text");
+
+        let title = renderPostHeader(postData);
+        postBody.insertBefore(message, title);
+
+        let commentsBtn = document.createElement("button");
+        commentsBtn.classList.add('btn', 'btn-outline-secondary');
+        commentsBtn.setAttribute('href', '#!');
+        commentsBtn.setAttribute('data-bs-toggle', 'modal');
+        commentsBtn.setAttribute('data-bs-target', '#single-post');
+        commentsBtn.textContent = `Comments (${postData.comments.length})`;
+        postBody.appendChild(commentBtn);
+    }
 
     return postBody;
+}
+
+function clearPosts(){
+    let posts = document.querySelectorAll('.post');
+    Array.from(posts).forEach(post => {
+        post.parentElement.removeChlid(post);
+    });
 }
 
 function appendPost(postData){
@@ -211,13 +272,98 @@ function appendPost(postData){
     form.insertAdjacentElement('afterend', post);
 }
 
-function renderSinglePost(postData){
-    const singlePost = document.querySelector("#single-post");
-    
+function renderCommentsForm(){
+    let form = document.createElement("form");
+
+    let formBody = document.createElement("div");
+    formBody.classList.add("mb-3");
+    form.appendChild(formBody);
+
+    let label = document.createElement("label");
+    label.classList.add("form-label", "fw-bold");
+    label.setAttribute("for", "comment-form-message");
+    label.textContent = "Post a comment:";
+    formBody.appendChild(label);
+
+    let textarea = document.createElement("textarea");
+    textarea.classList.add("form-control");
+    textarea.id = "comment-form-message";
+    textarea.name = "message";
+    textarea.placeholder = "Leave a comment...";
+    textarea.rows = "3";
+    formBody.appendChild(textarea);
+
+    let submitBtn = document.createElement("button");
+    submitBtn.classList.add("btn", "btn-primary");
+    submitBtn.type = "submit";
+    submitBtn.textContent = "Submit";
+    form.appendChild(submitBtn);
+
+    return form;
+}
+
+function renderComment(commentData){
+    let commentContainer = document.createElement("div");
+
+    // timestamp
+    let time = document.createElement("span");
+    time.classList.add("comment-time", "small", "text-muted");
+    time.textContent = renderDateString(commentData.timestamp);
+    commentContainer.appendChild(time);
+
+    // comment
+    let commentBody = document.createElement("p");
+    commentBody.classList.add("comment-body", "px-4");
+    commentBody.textContent = commentData.comment;
+    commentContainer.appendChild(commentBody);
+
+    return commentContainer;
+}
+
+function renderComments(postData){
+    let container = document.createElement("div");
+
+    // header
+    let header = document.createElement("h5");
+    header.classList.add("modal-title", "mb-2");
+    header.textContent = "Comments";
+    container.appendChild(header);
+
+    // comments
+    let comments = postData.comments.map(renderComment);
+    comments.forEach(container.appendChild);
+
+    // form
+    let commentForm = renderCommentsForm();
+    container.appendChild(commentForm);
+}
+
+function clearPostModal(){
+    const content = document.querySelector("#single-post .modal-content");
+    content.innerHTML = "";
+}
+
+function appendSinglePost(postData){
+    const content = document.querySelector("#single-post .modal-content");
+
+    // modal header
+    let header = renderPostHeader(postData, true);
+    content.appendChild(header);
+
+    // modal body
+    let body = renderPostBody(postData, true);
+    let gif = renderGiph(postData, true);
+
+    body.insertAdjacentElement('afterbegin', gif);
+    content.appendChild(body);
+
+    // comments
+    let comments = renderComments(postData);
+    content.appendChild(comments);
 }
 
 module.exports = {
-    appendPost
+    appendPost, appendSinglePost, clearPosts, clearPostModal
 };
 
 },{}]},{},[2]);
