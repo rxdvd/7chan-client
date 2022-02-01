@@ -5,7 +5,7 @@ function renderDateString(timestamp){
         "May", "June", "July", "August", "September",
         "October", "November", "December"
     ];
-    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${(date.getHours() % 12) + 1} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${(date.getHours() % 12) + 1}:${date.getMinutes()} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
 }
 
 function renderPostHeader(postData, modal=false){
@@ -112,7 +112,7 @@ function renderPostBody(postData, modal=false){
 function clearPosts(){
     let posts = document.querySelectorAll('.post');
     Array.from(posts).forEach(post => {
-        post.parentElement.removeChlid(post);
+        post.parentElement.removeChild(post);
     });
 }
 
