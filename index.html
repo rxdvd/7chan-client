@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="static/css/style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script defer src='./bundle.js'></script>
 </head>
 <body>
     <!-- Single post display -->
@@ -60,9 +61,9 @@
             <div class="modal-content">
             <form class="modal-header" id="giphy-search">
                 <div class="input-group mb-3" >
-                    <input class="form-control px-2" type="search" placeholder="Search for gifs..." aria-label="Search">
+                    <input id="searchTerm" class="form-control px-2" type="search" placeholder="Search for gifs..." aria-label="Search" >
                     <div class="input-group-append">
-                        <button class="btn btn-outline-info" type="" id="giph-search-btn"> Search</button>
+                        <button class="btn btn-outline-info" id="giph-search-btn"> Search</button>
                     </div>
                 </div>
             </form>
