@@ -1,4 +1,17 @@
 body {
     background-color: lightblue;
-    color: white;
+}
+
+#giphy-body {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    align-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.giphy-preview {
+    width: 49%;
+    cursor: pointer;
 }
