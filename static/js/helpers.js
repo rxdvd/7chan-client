@@ -85,16 +85,33 @@ const getGiphs = async (e) => {
   const response = await fetch(url);
   const json = await response.json();
   const gifArr = json.data;
+  let modalBody = document.querySelector("#giphy-body");
+  modalBody.innerHTML = ''
   renderGif(gifArr);
+  
 };
 
 const appendGif = (gif) => {
+  let modalBody = document.querySelector("#giphy-body");
   const newImg = document.createElement("img");
   let gifUrl = gif.images.downsized.url;
   newImg.src = gifUrl;
   newImg.className = "giphy-preview mb-2";
-  let modalBody = document.querySelector("#giphy-body");
   modalBody.insertAdjacentElement("afterbegin", newImg);
+  const selectGif = document.querySelector(".giphy-preview.mb-2");
+  selectGif.addEventListener("click", addGif);
+};
+
+const addGif = (e) => {
+  console.log("gif url:", e.target.src);
+  let gifThumnail = document.querySelector(".giphy-thumbnail");
+  gifThumnail.style.display = "none";
+  let gifUrl = e.target.src;
+  let gifThumnailUrl = gifThumnail.src;
+  gifThumnailUrl.value = gifUrl;
+  gifThumnail.style.display = "block";
+  console.log(gifThumnail);
+  return gifThumnailUrl;
 };
 
 module.exports = {
