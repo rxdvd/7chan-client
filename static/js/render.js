@@ -39,6 +39,8 @@ function renderGiph(postData, modal=false){
     let gifContainer = document.createElement("a");
     let gif = document.createElement("img");
 
+    gifContainer.href = "#!";
+
     gif.classList.add('card-img-top');
     if(modal) {
         gif.classList.add('mb-1');
@@ -91,11 +93,11 @@ function renderPostBody(postData, modal=false){
         postBody.appendChild(reaction);
     });
 
-    if(!modal){
+    if(modal){
         postBody.classList.replace("card-body", "modal-body");
         time.classList.add("mb-1", "text-end");
         message.classList.remove("card-text");
-
+    } else {
         let title = renderPostHeader(postData);
         postBody.insertBefore(title, message);
 
@@ -104,34 +106,13 @@ function renderPostBody(postData, modal=false){
         commentsBtn.setAttribute('href', '#!');
         commentsBtn.setAttribute('data-bs-toggle', 'modal');
         commentsBtn.setAttribute('data-bs-target', '#single-post');
+        commentsBtn.setAttribute('data-pid', postData.pid);
         commentsBtn.textContent = `Comments (${postData.comments.length})`;
+        commentsBtn.addEventListener('click', commentsBtnHandler);
         postBody.appendChild(commentsBtn);
     }
 
     return postBody;
-}
-
-function clearPosts(){
-    let posts = document.querySelectorAll('.post');
-    Array.from(posts).forEach(post => {
-        post.parentElement.removeChild(post);
-    });
-}
-
-function appendPost(postData){
-    const form = document.querySelector("#post-form");
-    let post = document.createElement("article");
-    let gif = postData.giphy && renderGiph(postData);
-    let postBody = renderPostBody(postData);
-    
-    post.classList.add("post", "card", "mb-3");
-
-    if(gif) {
-        post.appendChild(gif);
-    }
-
-    post.appendChild(postBody);
-    form.insertAdjacentElement('afterend', post);
 }
 
 function renderCommentsForm(){
@@ -184,6 +165,7 @@ function renderComment(commentData){
 
 function renderComments(postData){
     let container = document.createElement("div");
+    container.classList.add("pt-3");
 
     // header
     let header = document.createElement("h5");
@@ -200,6 +182,8 @@ function renderComments(postData){
     // form
     let commentForm = renderCommentsForm();
     container.appendChild(commentForm);
+
+    return container;
 }
 
 function clearPostModal(){
@@ -207,25 +191,38 @@ function clearPostModal(){
     content.innerHTML = "";
 }
 
-function appendSinglePost(postData){
+function showSinglePost(postData){
+    clearPostModal();
+  
     const content = document.querySelector("#single-post .modal-content");
-
+  
     // modal header
     let header = renderPostHeader(postData, true);
     content.appendChild(header);
-
+  
     // modal body
     let body = renderPostBody(postData, true);
     let gif = renderGiph(postData, true);
-
+  
     body.insertAdjacentElement('afterbegin', gif);
     content.appendChild(body);
-
+  
     // comments
     let comments = renderComments(postData);
-    content.appendChild(comments);
+    body.appendChild(comments);
+}
+
+function commentsBtnHandler(e){
+    let pid = e.target.getAttribute('data-pid');
+    getPostData(pid, showSinglePost);
+}
+
+async function getPostData(pid, callback){
+    let response = await fetch(`http://localhost:3000/posts/${pid}`);
+    let data = await response.json();
+    callback(data);
 }
 
 module.exports = {
-    appendPost, appendSinglePost, clearPosts, clearPostModal
+    renderGiph, renderPostBody, renderPostHeader, renderComments
 };
