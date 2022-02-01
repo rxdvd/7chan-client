@@ -8,43 +8,13 @@ function renderDateString(timestamp){
     return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${(date.getHours() % 12) + 1}:${("00" + date.getMinutes()).slice(-2)} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
 }
 
-function renderPostHeader(postData, modal=false){
-    let heading = document.createElement(modal ? "h5" : "h2");
-
-    heading.classList.add("card-title");
-    heading.textContent = postData.title;
-
-    if(modal) {
-        let header = document.createElement("div");
-        let closeBtn = document.createElement("button");
-
-        header.classList.add("modal-header", "border-0", "pb-0");
-        heading.classList.replace("card-title", "modal-title");
-        closeBtn.classList.add("btn-close");
-
-        closeBtn.setAttribute('type', 'button');
-        closeBtn.setAttribute('data-bs-dismiss', 'modal');
-        closeBtn.setAttribute('aria-label', 'Close');
-
-        header.appendChild(heading);
-        header.appendChild(closeBtn);
-        
-        return header;
-    }
-
-    return heading;
-}
-
-function renderGiph(postData, modal=false){
+function renderGiph(postData){
     let gifContainer = document.createElement("a");
     let gif = document.createElement("img");
 
     gifContainer.href = "#!";
 
     gif.classList.add('card-img-top');
-    if(modal) {
-        gif.classList.add('mb-1');
-    }
 
     gif.setAttribute('alt', 'Image from Giphy');
     gif.src = postData.giphy;
@@ -74,7 +44,7 @@ function renderReactions(postData){
     return reactionBtns;
 }
 
-function renderPostBody(postData, modal=false){
+function renderPostBody(postData){
     let postBody = document.createElement("div");
     postBody.classList.add("card-body");
 
@@ -82,6 +52,11 @@ function renderPostBody(postData, modal=false){
     time.classList.add("small", "text-muted");
     time.textContent = renderDateString(postData.timestamp);
     postBody.appendChild(time);
+
+    let title = document.createElement("h2");
+    title.classList.add("card-title");
+    title.textContent = postData.title;
+    postBody.appendChild(title);
 
     let message = document.createElement("p");
     message.classList.add('card-text');
@@ -93,61 +68,22 @@ function renderPostBody(postData, modal=false){
         postBody.appendChild(reaction);
     });
 
-    if(modal){
-        postBody.classList.replace("card-body", "modal-body");
-        time.classList.add("mb-1", "text-end");
-        message.classList.remove("card-text");
-    } else {
-        let title = renderPostHeader(postData);
-        postBody.insertBefore(title, message);
-
-        let commentsBtn = document.createElement("button");
-        commentsBtn.classList.add('btn', 'btn-outline-secondary');
-        commentsBtn.setAttribute('href', '#!');
-        commentsBtn.setAttribute('data-bs-toggle', 'modal');
-        commentsBtn.setAttribute('data-bs-target', '#single-post');
-        commentsBtn.setAttribute('data-pid', postData.pid);
-        commentsBtn.textContent = `Comments (${postData.comments.length})`;
-        commentsBtn.addEventListener('click', commentsBtnHandler);
-        postBody.appendChild(commentsBtn);
-    }
+    let commentsBtn = document.createElement("button");
+    commentsBtn.classList.add('btn', 'btn-outline-secondary');
+    commentsBtn.setAttribute('href', '#!');
+    commentsBtn.setAttribute('data-bs-toggle', 'modal');
+    commentsBtn.setAttribute('data-bs-target', '#single-post');
+    commentsBtn.setAttribute('data-pid', postData.pid);
+    commentsBtn.textContent = `Comments (${postData.comments.length})`;
+    commentsBtn.addEventListener('click', commentsBtnHandler);
+    postBody.appendChild(commentsBtn);
 
     return postBody;
 }
 
-function renderCommentsForm(){
-    let form = document.createElement("form");
-    form.id = "comment-form";
-
-    let formBody = document.createElement("div");
-    formBody.classList.add("mb-3");
-    form.appendChild(formBody);
-
-    let label = document.createElement("label");
-    label.classList.add("form-label", "fw-bold");
-    label.setAttribute("for", "comment-form-message");
-    label.textContent = "Post a comment:";
-    formBody.appendChild(label);
-
-    let textarea = document.createElement("textarea");
-    textarea.classList.add("form-control");
-    textarea.id = "comment-form-message";
-    textarea.name = "message";
-    textarea.placeholder = "Leave a comment...";
-    textarea.rows = "3";
-    formBody.appendChild(textarea);
-
-    let submitBtn = document.createElement("button");
-    submitBtn.classList.add("btn", "btn-primary");
-    submitBtn.type = "submit";
-    submitBtn.textContent = "Submit";
-    form.appendChild(submitBtn);
-
-    return form;
-}
-
 function renderComment(commentData){
     let commentContainer = document.createElement("div");
+    commentContainer.classList.add("comment");
 
     // timestamp
     let time = document.createElement("span");
@@ -165,57 +101,66 @@ function renderComment(commentData){
 }
 
 function renderComments(postData){
-    let container = document.createElement("div");
-    container.classList.add("pt-3");
-
-    // header
-    let header = document.createElement("h5");
-    header.classList.add("modal-title", "mb-2");
-    header.textContent = "Comments";
-    container.appendChild(header);
-
     // comments
     let comments = postData.comments.map(renderComment);
-    comments.forEach(comment => {
-        container.appendChild(comment);
-    });
 
-    // form
-    let commentForm = renderCommentsForm();
-    container.appendChild(commentForm);
-
-    return container;
+    return comments;
 }
 
-function clearPostModal(){
-    const content = document.querySelector("#single-post .modal-content");
-    content.innerHTML = "";
-}
-
-function showSinglePost(postData){
-    clearPostModal();
-  
+function renderSinglePost(postData){
     const content = document.querySelector("#single-post .modal-content");
   
     // modal header
-    let header = renderPostHeader(postData, true);
-    content.appendChild(header);
-  
-    // modal body
-    let body = renderPostBody(postData, true);
-    let gif = renderGiph(postData, true);
-  
-    body.insertAdjacentElement('afterbegin', gif);
-    content.appendChild(body);
+    let title = content.querySelector(".modal-header > .modal-title");
+    title.textContent = postData.title;
+
+    // gif
+    let gif = content.querySelector("#single-post-gif");
+    if(postData.giphy) {
+        gif.src = postData.giphy;
+        gif.classList.remove("d-none");
+    } else {
+        gif.classList.add("d-none");
+    }
+    
+    // timestamp
+    let timestamp = content.querySelector("#single-post-timestamp");
+    timestamp.textContent = renderDateString(postData.timestamp);
+
+    // message
+    let message = content.querySelector("#single-post-msg");
+    message.textContent = postData.message;
+
+    // reactions
+    let reactionBtns = content.querySelectorAll(".modal-body > button");
+    for(let i = 0; i < reactionBtns.length; i++) {
+        reactionBtns[i].parentElement.removeChild(reactionBtns[i]);
+    }
+
+    reactionBtns = renderReactions(postData);
+    Array.from(reactionBtns).forEach(button => {
+        message.insertAdjacentElement('afterend', button);
+    });
   
     // comments
-    let comments = renderComments(postData);
-    body.appendChild(comments);
+    let comments = content.querySelectorAll(".comment");
+    for(let i = 0; i < comments.length; i++) {
+        comments[i].parentElement.removeChild(comments[i]);
+    }
+
+    let commentForm = document.getElementById("comment-form");
+    comments = renderComments(postData);
+    comments.forEach(comment => {
+        commentForm.insertAdjacentElement('beforebegin', comment);
+    });
+
+    // form
+    form.message.value = "";
 }
 
 function commentsBtnHandler(e){
     let pid = e.target.getAttribute('data-pid');
-    getPostData(pid, showSinglePost);
+    getPostData(pid, renderSinglePost);
 }
 
 async function getPostData(pid, callback){
@@ -225,5 +170,5 @@ async function getPostData(pid, callback){
 }
 
 module.exports = {
-    renderGiph, renderPostBody, renderPostHeader, renderComments
+    renderGiph, renderPostBody, renderComments
 };
