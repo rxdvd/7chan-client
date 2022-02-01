@@ -120,7 +120,7 @@ function clearPosts(){
 
 function appendPost(postData){
     const form = document.querySelector("#post-form");
-    let post = document.createElement("div");
+    let post = document.createElement("article");
     let gif = postData.giphy && renderGiph(postData);
     let postBody = renderPostBody(postData);
     
