@@ -59,6 +59,7 @@ To design the web client we first found reference material by looking for websit
 
 - [x] Date display on posts showing the wrong time.
 - [x] New posts display in the wrong order.
+- [x] Sorting by oldest and newest shows posts in reverse order.
 
 ## Pitfalls & Discoveries
 

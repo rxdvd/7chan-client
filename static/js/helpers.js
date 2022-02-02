@@ -41,11 +41,11 @@ function setPost(posts, page, perPage, sortBy='new') {
   posts.sort((a, b) => {
     switch(sortBy){
       case 'old':
-        return b.timestamp - a.timestamp;
+        return a.timestamp - b.timestamp;
       case 'emoji':
         return countReactions(b) - countReactions(a);
     }
-    return a.timestamp - b.timestamp;
+    return b.timestamp - a.timestamp;
   });
 
   posts
