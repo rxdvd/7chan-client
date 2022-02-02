@@ -52,7 +52,7 @@ To design the web client we first found reference material by looking for websit
 
 ## Changelog
 
-
+* Remaining character count under message input fields.
 
 ## Fixed Bugs
 

@@ -1,4 +1,4 @@
-const { pageLoadHandler, giphySearchHandler, postSubmitHandler, paginationBtnHandler } = require("./handlers");
+const { pageLoadHandler, giphySearchHandler, postSubmitHandler, paginationBtnHandler, textareaHandler } = require("./handlers");
 const { getPaginationInfo } = require("./helpers");
 
 function init() {
@@ -11,12 +11,16 @@ function init() {
   postForm.addEventListener("submit", postSubmitHandler);
   //   gifBtn.addEventListener("click", loadGiphy);
 
+  const textareas = document.querySelectorAll("textarea");
+  textareas.forEach(textarea => {
+    textarea.addEventListener('keyup', textareaHandler);
+  });
+
   pageBtns.forEach(pageBtn => {
     pageBtn.addEventListener('click', paginationBtnHandler);
   });
   
   const pageInfo = getPaginationInfo();
-
   pageLoadHandler(pageInfo.page, pageInfo.perPage);
 }
 

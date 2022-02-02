@@ -5,6 +5,11 @@ function pageLoadHandler(page, perPage){
     getAllPosts(page, perPage);
 }
 
+function textareaHandler(e){
+    const remaining = e.target.nextElementSibling;
+    remaining.textContent = `${420 - e.target.value.length} characters remaining`;
+}
+
 function postSubmitHandler(e){
     submitPost(e);
 }
@@ -35,5 +40,6 @@ module.exports = {
     postSubmitHandler,
     giphySearchHandler,
     pageLoadHandler,
-    paginationBtnHandler
+    paginationBtnHandler,
+    textareaHandler
 };
