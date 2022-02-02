@@ -18,7 +18,7 @@ describe('index.html', () => {
         });
 
         it('has favicon', () => {
-            let icon = document.querySelector("head link[rel='icon']");
+            let icon = document.querySelector("head link[rel='shortcut icon']");
             expect(icon).toBeTruthy();
         });
         
