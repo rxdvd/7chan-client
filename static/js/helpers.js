@@ -108,12 +108,12 @@ function getPaginationInfo(){
 }
 
 function getFilterOption(){
-  let filter = document.querySelector("#post-filter-select");
+  let filter = document.querySelector("#post-sort-select");
   return filter.value;
 }
 
 function setFilterOption(opt){
-  let filter = document.querySelector("#post-filter-select");
+  let filter = document.querySelector("#post-sort-select");
   return filter.value = ['new', 'old', 'emoji'].includes(opt) ? opt : 'new';
 }
 
