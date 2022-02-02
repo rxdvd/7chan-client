@@ -29,6 +29,10 @@ function setPost(posts, page, perPage) {
   let totalPages = Math.ceil(posts.length / perPage);
   if(page > totalPages) page = 1;
 
+  posts.sort((a, b) => {
+    return a.timestamp - b.timestamp
+  });
+
   posts
     .slice((page - 1) * perPage, page * perPage)
     .forEach(appendPost);

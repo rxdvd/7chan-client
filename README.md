@@ -56,7 +56,8 @@ To design the web client we first found reference material by looking for websit
 
 ## Fixed Bugs
 
-
+- [x] Date display on posts showing the wrong time.
+- [x] New posts display in the wrong order.
 
 ## Pitfalls & Discoveries
 

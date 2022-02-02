@@ -5,7 +5,9 @@ function renderDateString(timestamp){
         "May", "June", "July", "August", "September",
         "October", "November", "December"
     ];
-    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${(date.getHours() % 12) + 1}:${("00" + date.getMinutes()).slice(-2)} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
+    let hours = date.getHours() % 12;
+    if(hours === 0) hours = 12;
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${hours}:${("00" + date.getMinutes()).slice(-2)} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
 }
 
 function renderGiph(postData){
@@ -217,9 +219,6 @@ function commentsBtnHandler(e){
     console.log('comments clicked')
     console.log('now in modal')
     getPostData(pid, renderSinglePost);
-    
-
-    
 }
 
 async function getPostData(pid, callback){
