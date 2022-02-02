@@ -33,8 +33,8 @@ function paginationBtnHandler(e){
         `?page=${pageInfo.page}&perPage=${pageInfo.perPage}`
     );
 
-    const form = document.querySelector("#post-form");
-    form.nextSibling.scrollIntoView();
+    const sortBy = document.querySelector("#post-sort");
+    sortBy.scrollIntoView();
 }
 
 function postSortHandler(e){
