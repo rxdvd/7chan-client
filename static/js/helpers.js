@@ -117,6 +117,14 @@ function setFilterOption(opt){
   return filter.value = ['new', 'old', 'emoji'].includes(opt) ? opt : 'new';
 }
 
+function clearTags(){
+  //to-do
+}
+
+function generateTags(postsData){
+  //to-do: go through posts and put all tags in the taglist
+}
+
 module.exports = {
   setPost, appendPost, renderGif, parseURLQuery, getPaginationInfo, getFilterOption,setFilterOption
 };

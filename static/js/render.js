@@ -229,6 +229,27 @@ function renderPagination(postsData, currentPage, perPage){
     }
 }
 
+function renderTagCheckbox(tag){
+    let container = document.createElement("div");
+    container.classList.add("form-check");
+
+    let checkbox = document.createElement("input");
+    checkbox.classList.add("form-check-input");
+    checkbox.type = "checkbox";
+    checkbox.value = tag;
+    checkbox.id = `${tag}-tag-checkbox`
+    checkbox.dataset.tagname = tag;
+    container.appendChild(checkbox);
+
+    let label = document.createElement("label");
+    label.classList.add("form-check-label");
+    label.for = checkbox.id;
+    label.textContent = tag;
+    container.appendChild(label);
+    // add event listener
+    return container;
+}
+
 function commentsBtnHandler(e){
     let modalForm = document.getElementById("comment-form")
     let pid = e.target.getAttribute('data-pid');

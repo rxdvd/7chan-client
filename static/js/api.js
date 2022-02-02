@@ -7,6 +7,7 @@ const getAllPosts = async (page, perPage, sortBy='new') => {
         const response = await fetch("http://localhost:3000/posts");
         const data = await response.json();
         setPost(data, page, perPage, sortBy); // function that iterates through post data
+        // generate tag checkboxes here
     } catch (err) {
         console.error(err);
     }
