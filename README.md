@@ -38,7 +38,10 @@ To design the web client we first found reference material by looking for websit
 
 ### References
 
-<!-- list of reference websites -->
+* [Everyday Sexism Project 🔗](https://everydaysexism.com/)
+* [Twitter 🔗](https://twitter.com/)
+* [Reddit 🔗](https://www.reddit.com/)
+* [The Guardian 🔗](https://www.theguardian.com/)
 
 ### Technologies
 
