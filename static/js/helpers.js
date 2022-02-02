@@ -20,8 +20,8 @@ function appendPost(postData){
 
   post.appendChild(postBody);
 
-  const pagination = document.querySelector("#pagination");
-  pagination.insertAdjacentElement('beforebegin', post);
+  const filter = document.querySelector("#post-filter");
+  filter.insertAdjacentElement('afterend', post);
 }
 
 function countReactions(postData){
@@ -41,11 +41,11 @@ function setPost(posts, page, perPage, sortBy='new') {
   posts.sort((a, b) => {
     switch(sortBy){
       case 'old':
-        return a.timestamp - b.timestamp;
+        return b.timestamp - a.timestamp;
       case 'emoji':
         return countReactions(b) - countReactions(a);
     }
-    return b.timestamp - a.timestamp;
+    return a.timestamp - b.timestamp;
   });
 
   posts
