@@ -73,7 +73,7 @@ function renderPostBody(postData){
     commentsBtn.setAttribute('href', '#!');
     commentsBtn.setAttribute('data-bs-toggle', 'modal');
     commentsBtn.setAttribute('data-bs-target', '#single-post');
-    commentsBtn.setAttribute('data-pid', postData.pid);
+    commentsBtn.dataset.pid = postData.pid;
     commentsBtn.textContent = `Comments (${postData.comments.length})`;
     commentsBtn.addEventListener('click', commentsBtnHandler);
     postBody.appendChild(commentsBtn);
