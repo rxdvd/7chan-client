@@ -21,7 +21,7 @@ Client-side for group project working on an anonymous community journaling websi
 
 ### Deployment
 
-This client is currently deployed at https://goofy-keller-23f686.netlify.app/
+This client is currently deployed at https://coderunners.netlify.app/
 
 ## Project Goal
 
