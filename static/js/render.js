@@ -92,6 +92,11 @@ function renderPostBody(postData){
     commentsBtn.addEventListener('click', commentsBtnHandler);
     postBody.appendChild(commentsBtn);
 
+    let tags = document.createElement("div");
+    tags.classList.add("small", "text-muted", "text-end");
+    tags.textContent = `Tags: ${postData.tags.join(", ")}`;
+    postBody.appendChild(tags);
+
     return postBody;
 }
 

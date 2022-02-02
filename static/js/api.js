@@ -14,12 +14,16 @@ const getAllPosts = async (page, perPage, sortBy='new') => {
 
 const submitPost = async (e) => {
     e.preventDefault();
-  
+    
+    let tags = e.target.tags.value;
+    tags = tags.length ? tags.split(",").map(tag => tag.trim()) : [];
+
     try {
         const postData = {
             title: e.target.title.value,
             message: e.target.message.value,
             giphy: e.target.giphy.value,
+            tags: tags
         };
 
         const options = {
