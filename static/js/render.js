@@ -5,7 +5,9 @@ function renderDateString(timestamp){
         "May", "June", "July", "August", "September",
         "October", "November", "December"
     ];
-    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${(date.getHours() % 12) + 1}:${("00" + date.getMinutes()).slice(-2)} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
+    let hours = date.getHours() % 12;
+    if(hours === 0) hours = 12;
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${hours}:${("00" + date.getMinutes()).slice(-2)} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
 }
 
 function renderGiph(postData){
@@ -73,7 +75,7 @@ function renderPostBody(postData){
     commentsBtn.setAttribute('href', '#!');
     commentsBtn.setAttribute('data-bs-toggle', 'modal');
     commentsBtn.setAttribute('data-bs-target', '#single-post');
-    commentsBtn.setAttribute('data-pid', postData.pid);
+    commentsBtn.dataset.pid = postData.pid;
     commentsBtn.textContent = `Comments (${postData.comments.length})`;
     commentsBtn.addEventListener('click', commentsBtnHandler);
     postBody.appendChild(commentsBtn);
@@ -148,14 +150,12 @@ function renderSinglePost(postData){
         comments[i].parentElement.removeChild(comments[i]);
     }
 
-    let commentForm = document.getElementById("comment-form");
+    
     comments = renderComments(postData);
     comments.forEach(comment => {
         commentForm.insertAdjacentElement('beforebegin', comment);
     });
 
-    // form
-    form.message.value = "";
 }
 
 function clearPagination(){
@@ -213,7 +213,11 @@ function renderPagination(postsData, currentPage, perPage){
 }
 
 function commentsBtnHandler(e){
+    let modalForm = document.getElementById("comment-form")
     let pid = e.target.getAttribute('data-pid');
+    modalForm.setAttribute('data-pid', pid);
+    console.log('comments clicked')
+    console.log('now in modal')
     getPostData(pid, renderSinglePost);
 }
 
@@ -222,7 +226,43 @@ async function getPostData(pid, callback){
     let data = await response.json();
     callback(data);
 }
+let commentForm = document.getElementById("comment-form");
 
+
+const submitComment = async (e) => {
+    e.preventDefault();
+    const commentForm = e.target
+  
+    // pass post id through and use as url param
+    const pid = e.target.getAttribute('data-pid');
+
+    try {
+        const commentData = {
+            comment: e.target.commentFormMessage.value
+        };
+    
+        const options = {
+            method: "POST",
+            body: JSON.stringify(commentData),
+            headers: { "Content-Type": "application/json" },
+        };
+    
+        const response = await fetch(
+            `http://localhost:3000/posts/${pid}/comments`,
+            options
+        );
+    
+        const json = await response.json();
+    
+        //create function that appends comments data in specified format created
+        renderSinglePost(json)
+        commentForm.reset()
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+commentForm.addEventListener("submit", submitComment)
 module.exports = {
     renderGiph, renderPostBody, renderComments, renderPagination
 };

@@ -1,4 +1,4 @@
-const { setPost, appendPost, renderGif } = require("./helpers");
+const { setPost, appendPost, renderGif, } = require("./helpers");
 
 const APIKEY = "TLvi8tf9k2z6WmKQm73BO1RIXRoaZzmL";
 
@@ -38,35 +38,7 @@ const submitPost = async (e) => {
     }
 };
 
-const submitComment = async (e) => {
-    e.preventDefault();
-  
-    // pass post id through and use as url param
-    const pid = e.target.value;
-    try {
-        const commentData = {
-            message: e.target.value,
-            time: e.target.value, // create function that get time of request
-        };
-    
-        const options = {
-            method: "POST",
-            body: JSON.stringify(commentData),
-            headers: { "Content-Type": "application/json" },
-        };
-    
-        const response = await fetch(
-            `http://localhost:3000/posts/${pid}/comments`,
-            options
-        );
-    
-        const json = await response.json();
-    
-        appendComments(json); //create function that appends comments data in specified format created
-    } catch (err) {
-        console.error(err);
-    }
-};
+
 
 const getGiphs = async (e) => {
     e.preventDefault();
@@ -86,6 +58,5 @@ const getGiphs = async (e) => {
 module.exports = {
     getAllPosts,
     submitPost,
-    submitComment,
     getGiphs
 }
