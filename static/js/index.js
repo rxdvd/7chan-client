@@ -1,27 +1,28 @@
-const { pageLoadHandler, giphySearchHandler, postSubmitHandler, paginationBtnHandler, textareaHandler } = require("./handlers");
+const { pageLoadHandler, giphySearchHandler, postSubmitHandler, paginationBtnHandler, textareaHandler, postFilterHandler } = require("./handlers");
 const { getPaginationInfo } = require("./helpers");
 
 function init() {
-  const postForm = document.querySelector("#post-form");
-  const gifBtn = document.querySelector("#post-form #add-gif-btn");
   const gifSearch = document.querySelector("#giphy-search");
-  const pageBtns = document.querySelectorAll("#pagination > ul > li > a");
-
   gifSearch.addEventListener("submit", giphySearchHandler);
+
+  const postForm = document.querySelector("#post-form");
   postForm.addEventListener("submit", postSubmitHandler);
-  //   gifBtn.addEventListener("click", loadGiphy);
 
   const textareas = document.querySelectorAll("textarea");
   textareas.forEach(textarea => {
     textarea.addEventListener('keyup', textareaHandler);
   });
 
+  const filter = document.querySelector("#post-filter-select");
+  filter.addEventListener('change', postFilterHandler);
+
+  const pageBtns = document.querySelectorAll("#pagination > ul > li > a");
   pageBtns.forEach(pageBtn => {
     pageBtn.addEventListener('click', paginationBtnHandler);
   });
   
   const pageInfo = getPaginationInfo();
-  pageLoadHandler(pageInfo.page, pageInfo.perPage);
+  pageLoadHandler(pageInfo.page, pageInfo.perPage, pageInfo.sortBy);
 }
 
 init();

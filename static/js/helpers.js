@@ -8,7 +8,6 @@ function clearPosts(){
 }
 
 function appendPost(postData){
-  const form = document.querySelector("#post-form");
   let post = document.createElement("article");
   let gif = postData.giphy && renderGiph(postData);
   let postBody = renderPostBody(postData);
@@ -20,17 +19,33 @@ function appendPost(postData){
   }
 
   post.appendChild(postBody);
-  form.insertAdjacentElement('afterend', post);
+
+  const pagination = document.querySelector("#pagination");
+  pagination.insertAdjacentElement('beforebegin', post);
 }
 
-function setPost(posts, page, perPage) {
+function countReactions(postData){
+  let count = 0;
+  for(let emoji in postData.reactions) {
+    count += postData.reactions[emoji].length;
+  }
+  return count;
+}
+
+function setPost(posts, page, perPage, sortBy='new') {
   clearPosts();
   
   let totalPages = Math.ceil(posts.length / perPage);
   if(page > totalPages) page = 1;
 
   posts.sort((a, b) => {
-    return a.timestamp - b.timestamp
+    switch(sortBy){
+      case 'old':
+        return b.timestamp - a.timestamp;
+      case 'emoji':
+        return countReactions(b) - countReactions(a);
+    }
+    return a.timestamp - b.timestamp;
   });
 
   posts
@@ -87,10 +102,21 @@ function getPaginationInfo(){
   let query = parseURLQuery();
   return {
     page: parseInt(query.page) || 1,
-    perPage: Math.max(1, parseInt(query.perPage)) || 5
+    perPage: Math.max(1, parseInt(query.perPage)) || 5,
+    sortBy: query.sortBy || 'new'
   }
 }
 
+function getFilterOption(){
+  let filter = document.querySelector("#post-filter-select");
+  return filter.value;
+}
+
+function setFilterOption(opt){
+  let filter = document.querySelector("#post-filter-select");
+  return filter.value = ['new', 'old', 'emoji'].includes(opt) ? opt : 'new';
+}
+
 module.exports = {
-  setPost, appendPost, renderGif, parseURLQuery, getPaginationInfo
+  setPost, appendPost, renderGif, parseURLQuery, getPaginationInfo, getFilterOption,setFilterOption
 };

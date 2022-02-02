@@ -1,8 +1,9 @@
 const { getAllPosts, submitPost, getGiphs } = require("./api");
-const { getPaginationInfo } = require("./helpers");
+const { getPaginationInfo, getFilterOption, setFilterOption } = require("./helpers");
 
-function pageLoadHandler(page, perPage){
-    getAllPosts(page, perPage);
+function pageLoadHandler(page, perPage, sortBy){
+    setFilterOption(sortBy);
+    getAllPosts(page, perPage, sortBy);
 }
 
 function textareaHandler(e){
@@ -24,7 +25,7 @@ function paginationBtnHandler(e){
         perPage: getPaginationInfo().perPage
     };
 
-    getAllPosts(pageInfo.page, pageInfo.perPage);
+    getAllPosts(pageInfo.page, pageInfo.perPage, getFilterOption());
     
     window.history.replaceState(
         pageInfo, 
@@ -36,10 +37,19 @@ function paginationBtnHandler(e){
     form.nextSibling.scrollIntoView();
 }
 
+function postFilterHandler(e){
+    getAllPosts(
+        1,
+        getPaginationInfo().perPage,
+        e.target.value
+    );
+}
+
 module.exports = {
     postSubmitHandler,
     giphySearchHandler,
     pageLoadHandler,
     paginationBtnHandler,
-    textareaHandler
+    textareaHandler,
+    postFilterHandler
 };
