@@ -158,6 +158,60 @@ function renderSinglePost(postData){
     form.message.value = "";
 }
 
+function clearPagination(){
+    let pageLinks = document.querySelectorAll("#pagination > ul > li.page-item");
+
+    for(let i = 0; i < pageLinks.length; i++){
+        pageLinks[i].className = "page-item";
+        pageLinks[i].firstElementChild.removeAttribute("aria-disabled");
+        pageLinks[i].removeAttribute("aria-current");
+    }
+}
+
+function renderPagination(postsData, currentPage, perPage){
+    let totalPages = Math.ceil(postsData.length / perPage);
+    let pageItems = document.querySelectorAll("#pagination > ul > li.page-item");
+    let prevBtn = pageItems[0];
+    let nextBtn = pageItems[pageItems.length - 1];
+
+    clearPagination();
+    currentPage = parseInt(currentPage);
+
+    // prev
+    if (currentPage === 1) {
+        prevBtn.classList.add("disabled");
+        prevBtn.firstElementChild.setAttribute('aria-disabled', 'true');
+    }
+    prevBtn.firstElementChild.dataset.page = currentPage - 1;
+
+    // next
+    if (currentPage === totalPages) {
+        nextBtn.classList.add("disabled");
+        nextBtn.firstElementChild.setAttribute('aria-disabled', 'true');
+    }
+    nextBtn.firstElementChild.dataset.page = currentPage + 1;
+
+    // pages
+    let startPage = Math.min(Math.max(1, totalPages - 4), Math.max(1, currentPage - 2));
+
+    for(let i = 1; i < pageItems.length - 1; i++){
+        let pageBtn = pageItems[i];
+
+        if(i === currentPage) {
+            pageBtn.classList.add("active");
+            pageBtn.setAttribute('aria-current', 'page');
+        }
+
+        let pageNumber = startPage + i - 1;
+
+        if(pageNumber > totalPages) {
+            pageBtn.classList.add("d-none");
+        }
+        pageBtn.firstElementChild.textContent = pageNumber;
+        pageBtn.firstElementChild.dataset.page = pageNumber;
+    }
+}
+
 function commentsBtnHandler(e){
     let pid = e.target.getAttribute('data-pid');
     getPostData(pid, renderSinglePost);
@@ -170,5 +224,5 @@ async function getPostData(pid, callback){
 }
 
 module.exports = {
-    renderGiph, renderPostBody, renderComments
+    renderGiph, renderPostBody, renderComments, renderPagination
 };

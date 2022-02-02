@@ -2,11 +2,11 @@ const { setPost, appendPost, renderGif } = require("./helpers");
 
 const APIKEY = "TLvi8tf9k2z6WmKQm73BO1RIXRoaZzmL";
 
-const getAllPosts = async () => {
+const getAllPosts = async (page, perPage) => {
     try {
         const response = await fetch("http://localhost:3000/posts");
         const data = await response.json();
-        setPost(data); // function that iterates through post data
+        setPost(data, page, perPage); // function that iterates through post data
     } catch (err) {
         console.error(err);
     }
