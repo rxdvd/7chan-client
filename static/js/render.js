@@ -1,5 +1,3 @@
-// const {submitComment} = require('./api')
-
 function renderDateString(timestamp){
     let date = new Date(parseInt(timestamp));
     let months = [
@@ -156,10 +154,6 @@ function renderSinglePost(postData){
         commentForm.insertAdjacentElement('beforebegin', comment);
     });
 
-    
-
-    // form
-    // form.message.value = "";
 }
 
 function commentsBtnHandler(e){
