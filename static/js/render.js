@@ -26,21 +26,33 @@ function renderGiph(postData){
     return gifContainer;
 }
 
+function renderReactionBtn(postData, emoji){
+    let btn = document.createElement('button');
+    btn.classList.add('btn');
+    if(localStorage.uid && postData.reactions[emoji].includes(localStorage.uid)) {
+        btn.classList.add('btn-dark');
+    }else{
+        btn.classList.add('btn-light');
+    }
+    btn.dataset.pid = postData.pid;
+    btn.dataset.emoji = emoji;
+    btn.addEventListener('click', reactionBtnHandler);
+
+    let reactions = {
+        thumbs_up: '👍',
+        thumbs_down: '👎',
+        heart: '❤'
+    };
+    btn.textContent = `${postData.reactions[emoji].length} ${reactions[emoji]}`;
+
+    return btn;
+}
+
 function renderReactions(postData){
     let reactionBtns = [
-        ['👍', 'thumbs_up'],
-        ['👎', 'thumbs_down'],
-        ['❤', 'heart']
+        'thumbs_up', 'thumbs_down', 'heart'
     ].map(emoji => {
-        let btn = document.createElement('button');
-        btn.classList.add('btn');
-        if(localStorage.uid && postData.reactions[emoji[1]].includes(localStorage.uid)) {
-            btn.classList.add('btn-dark');
-        }else{
-            btn.classList.add('btn-light');
-        }
-        btn.textContent = `${postData.reactions[emoji[1]].length} ${emoji[0]}`;
-        return btn;
+        return renderReactionBtn(postData, emoji);
     });
 
     return reactionBtns;
@@ -226,6 +238,50 @@ async function getPostData(pid, callback){
     let data = await response.json();
     callback(data);
 }
+
+function reactionBtnHandler(e){
+    if(!localStorage.uid) {
+        let uid = "";
+        while(uid.length < 10){
+            uid += Math.floor(Math.random() * 10);
+        }
+        localStorage.uid = uid;
+    }
+
+    submitReaction(
+        e.target.dataset.pid,
+        e.target.dataset.emoji,
+        localStorage.uid
+    );
+}
+
+async function submitReaction(pid, emoji, uid){
+    try {
+        const reqBody = {
+            emoji: emoji,
+            uid: uid
+        };
+
+        const reqOptions = {
+            method: "PATCH",
+            body: JSON.stringify(reqBody),
+            headers: { "Content-Type": "application/json" }
+        };
+
+        const response = await fetch(`http://localhost:3000/posts/${pid}/emoji`, reqOptions);
+
+        const data = await response.json();
+        
+        const reactionBtns = document.querySelectorAll(`.btn[data-pid='${pid}'][data-emoji='${emoji}'`);
+        reactionBtns.forEach(btn => {
+            let newBtn = renderReactionBtn(data, emoji);
+            btn.parentElement.replaceChild(newBtn, btn);
+        });
+    } catch(err) {
+        console.error(err);
+    }
+}
+
 let commentForm = document.getElementById("comment-form");
 
 
@@ -244,7 +300,7 @@ const submitComment = async (e) => {
         const options = {
             method: "POST",
             body: JSON.stringify(commentData),
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json" }
         };
     
         const response = await fetch(
