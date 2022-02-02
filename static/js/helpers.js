@@ -43,7 +43,7 @@ function setPost(posts, page, perPage, sortBy='new') {
       case 'old':
         return b.timestamp - a.timestamp;
       case 'emoji':
-        return countReactions(b) - countReactions(a);
+        return countReactions(a) - countReactions(b);
     }
     return a.timestamp - b.timestamp;
   });
