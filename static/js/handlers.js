@@ -1,4 +1,4 @@
-const { getAllPosts, submitPost, getGiphs } = require("./api");
+const { getAllPosts, submitPost, getGiphs, } = require("./api");
 
 function pageLoadHandler(e){
     getAllPosts();
@@ -11,6 +11,8 @@ function postSubmitHandler(e){
 function giphySearchHandler(e){
     getGiphs(e);
 }
+
+
 
 module.exports = {
     postSubmitHandler,
