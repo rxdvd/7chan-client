@@ -1,4 +1,4 @@
-const { setPost, appendPost, renderGif, } = require("./helpers");
+const { setPost, appendPost, renderGif } = require("./helpers");
 
 const APIKEY = "TLvi8tf9k2z6WmKQm73BO1RIXRoaZzmL";
 

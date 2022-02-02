@@ -1,4 +1,4 @@
-const { pageLoadHandler, giphySearchHandler, postSubmitHandler, paginationBtnHandler, textareaHandler, postFilterHandler } = require("./handlers");
+const { pageLoadHandler, giphySearchHandler, postSubmitHandler, paginationBtnHandler, textareaHandler, postSortHandler } = require("./handlers");
 const { getPaginationInfo } = require("./helpers");
 
 function init() {
@@ -13,8 +13,8 @@ function init() {
     textarea.addEventListener('keyup', textareaHandler);
   });
 
-  const filter = document.querySelector("#post-filter-select");
-  filter.addEventListener('change', postFilterHandler);
+  const sortBy = document.querySelector("#post-sort-select");
+  sortBy.addEventListener('change', postSortHandler);
 
   const pageBtns = document.querySelectorAll("#pagination > ul > li > a");
   pageBtns.forEach(pageBtn => {

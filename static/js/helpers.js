@@ -20,8 +20,8 @@ function appendPost(postData){
 
   post.appendChild(postBody);
 
-  const filter = document.querySelector("#post-filter");
-  filter.insertAdjacentElement('afterend', post);
+  const sortBy = document.querySelector("#post-sort");
+  sortBy.insertAdjacentElement('afterend', post);
 }
 
 function countReactions(postData){

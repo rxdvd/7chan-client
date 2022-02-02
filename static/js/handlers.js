@@ -37,7 +37,7 @@ function paginationBtnHandler(e){
     form.nextSibling.scrollIntoView();
 }
 
-function postFilterHandler(e){
+function postSortHandler(e){
     getAllPosts(
         1,
         getPaginationInfo().perPage,
@@ -51,5 +51,5 @@ module.exports = {
     pageLoadHandler,
     paginationBtnHandler,
     textareaHandler,
-    postFilterHandler
+    postSortHandler
 };
