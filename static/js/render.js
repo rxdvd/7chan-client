@@ -107,7 +107,7 @@ async function submitReaction(pid, emoji, uid){
             headers: { "Content-Type": "application/json" }
         };
 
-        const response = await fetch(`http://localhost:3000/posts/${pid}/emoji`, reqOptions);
+        const response = await fetch(`https://coderunner-blog.herokuapp.com/posts/${pid}/emoji`, reqOptions);
 
         const data = await response.json();
         
