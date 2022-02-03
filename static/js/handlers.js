@@ -18,6 +18,12 @@ function giphySearchHandler(e){
     getGiphs(e);
 }
 
+function giphRemoveHandler(e){
+    const input = document.querySelector("#giphy-input");
+    input.src = "";
+    e.target.parentElement.classList.add("d-none");
+}
+
 function paginationBtnHandler(e){
     let pageInfo = {
         ...getPaginationInfo(),
@@ -55,5 +61,6 @@ module.exports = {
     paginationBtnHandler,
     textareaHandler,
     postSortHandler,
-    postFilterHandler
+    postFilterHandler,
+    giphRemoveHandler
 };

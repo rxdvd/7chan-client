@@ -1,4 +1,4 @@
-const { pageLoadHandler, giphySearchHandler, postSubmitHandler, paginationBtnHandler, textareaHandler, postSortHandler, postFilterHandler } = require("./handlers");
+const { pageLoadHandler, giphySearchHandler, postSubmitHandler, paginationBtnHandler, textareaHandler, postSortHandler, postFilterHandler, giphRemoveHandler } = require("./handlers");
 const { getPaginationInfo } = require("./helpers");
 
 function init() {
@@ -7,6 +7,9 @@ function init() {
 
   const postForm = document.querySelector("#post-form");
   postForm.addEventListener("submit", postSubmitHandler);
+
+  const gifRemoveBtn = document.querySelector("#gif-remove-btn");
+  gifRemoveBtn.addEventListener('click', giphRemoveHandler);
 
   const textareas = document.querySelectorAll("textarea");
   textareas.forEach(textarea => {
