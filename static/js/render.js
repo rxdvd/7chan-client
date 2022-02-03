@@ -44,7 +44,7 @@ function giphClickHandler(e){
   giphyInput.value = selectedGif.src;
 
   formImg.parentElement.classList.remove("d-none");
-  
+
   const closeBtn = document.querySelector("#giphy-body + .modal-footer > button");
   closeBtn.click();
 };
@@ -111,7 +111,7 @@ async function submitReaction(pid, emoji, uid){
 
         const data = await response.json();
         
-        const reactionBtns = document.querySelectorAll(`.btn[data-pid='${pid}'][data-emoji='${emoji}'`);
+        const reactionBtns = document.querySelectorAll(`.btn[data-pid='${pid}'][data-emoji='${emoji}']`);
         reactionBtns.forEach(btn => {
             let newBtn = renderReactionBtn(data, emoji);
             btn.parentElement.replaceChild(newBtn, btn);
@@ -261,5 +261,7 @@ async function getPostData(pid, callback){
 
 module.exports = {
     renderPostGiph, renderGiphyResult, giphClickHandler, 
-    renderPostBody, renderSinglePost
+    renderPostBody, renderSinglePost, renderDateString,
+    renderReactions, renderReactionBtn, reactionBtnHandler,
+    generateUID, submitReaction
 };
