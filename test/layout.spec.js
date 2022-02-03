@@ -77,19 +77,60 @@ describe('index.html', () => {
             expect(githubNav.textContent).toBe('Github');
 
         })
+        
+        // test('has a dark background', () => {
+        //     const colourBgDark = '#f8f9fa'
+        //     let backgroundNav = document.querySelector('body nav[class="navbar-dark bg-dark"]');
+            
+        //     expect(backgroundNav).stylesheet(`background: ${colourBgDark}`);
+        // });
+
     });
 
     describe('header', () => {
 
+        test('has the heading Share your coding experience.', () => {
+            let headingHeader = document.querySelector("body header h1");
+            expect(headingHeader).toBeTruthy();
+            expect(headingHeader.textContent).toBe('Share your coding experience.');
+
+        })
+
+        test('has the paragraph Anonymous platform for coders to share their stories.', () => {
+            let paragraphHeader = document.querySelector("body header p");
+            expect(paragraphHeader).toBeTruthy();
+            expect(paragraphHeader.textContent).toContain('Anonymous platform for coders to share their stories.');
+
+        })
     });
 
     describe('main content', () => {
         describe('info box', () => {
 
+            
+            test('has the heading What can I share?.', () => {
+                let infoBoxHeadingMain = document.querySelector("body main div div section div[class='card-header']");
+                expect(infoBoxHeadingMain).toBeTruthy();
+                expect(infoBoxHeadingMain.textContent).toBe('What can I share?');
+                
+            })
+            
+            test('has the paragraph This platform is primarily for coders to anonymously share their experiences with other coders around the world.', () => {
+                let infoBoxParagraphMain = document.querySelector("body main div div section div[class='card-body']");
+                expect(infoBoxParagraphMain).toBeTruthy();
+                expect(infoBoxParagraphMain.textContent).toContain('This platform is primarily for coders to anonymously share their experiences with other coders around the world');
+    
+            })
         });
 
         describe('post form', () => {
 
+            test('What\'s on your mind?', () => {
+                let formHeadingMain = document.querySelector("body main div div form h2");
+                expect(formHeadingMain).toBeTruthy();
+                expect(formHeadingMain.textContent).toBe('What\'s on your mind?');
+                
+            })
         });
 
         describe('posts', () => {
