@@ -3,6 +3,7 @@
 */
 
 const fs = require('fs');
+const { TestWatcher } = require('jest');
 const html = fs.readFileSync(require.resolve('../index.html'), 'utf8');
 
 describe('index.html', () => {
@@ -56,7 +57,26 @@ describe('index.html', () => {
     });
 
     describe('nav bar', () => {
+        test('has the heading of  </ coderunner>', () => {
+            let coderunnerNav = document.querySelector("body nav a");
+            expect(coderunnerNav).toBeTruthy();
+            expect(coderunnerNav.textContent).toBe('</ coderunner>');
 
+        })
+
+        test('has the heading of  About', () => {
+            let aboutNav = document.querySelector("body nav div div ul li a[href='#!']");
+            expect(aboutNav).toBeTruthy();
+            expect(aboutNav.textContent).toBe('About');
+
+        })
+
+        test('has the heading of  Github', () => {
+            let githubNav = document.querySelector("body nav div div ul li a[href='#']");
+            expect(githubNav).toBeTruthy();
+            expect(githubNav.textContent).toBe('Github');
+
+        })
     });
 
     describe('header', () => {
