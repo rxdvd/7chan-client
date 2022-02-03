@@ -42,7 +42,7 @@ const submitPost = async (e) => {
 
         const json = await response.json();
 
-        appendPost(json); //create function that appends data in specified format created
+        appendPost(json); 
         form.reset()
     } catch (err) {
         console.error(err);
