@@ -1,7 +1,7 @@
 const { getAllPosts, submitPost, submitComment, getGiphs } = require("./api");
 const { getPaginationInfo, updateHistory } = require("./helpers");
 
-function pageLoadHandler(e){
+function pageLoadHandler(){
     getAllPosts(getPaginationInfo());
 }
 
