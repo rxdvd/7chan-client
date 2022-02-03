@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "python -m http.server",
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --silent",
     "coverage": "jest --coverage",
     "dev": "concurrently \"watchify ./static/js/index.js -o bundle.js\" \"python -m http.server\"",
     "bundle": "browserify ./static/js/index.js > bundle.js"
@@ -17,6 +17,7 @@
     "browserify": "^17.0.0",
     "concurrently": "^7.0.0",
     "jest": "^27.4.7",
+    "jest-fetch-mock": "^3.0.3",
     "watchify": "^4.0.0"
   }
 }
