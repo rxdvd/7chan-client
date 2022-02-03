@@ -1,6 +1,9 @@
-const { setPost, appendPost, renderGif, sortPosts, filterPosts } = require("./helpers");
+const { 
+    setPost, appendPost, setGif, sortPosts, 
+    filterPosts, updateCommentCount, resetCommentForm 
+} = require("./helpers");
 
-const APIKEY = "TLvi8tf9k2z6WmKQm73BO1RIXRoaZzmL";
+const { renderSinglePost } = require("./render");
 
 const getAllPosts = async (opts) => {
     try {
@@ -46,8 +49,35 @@ const submitPost = async (e) => {
     }
 };
 
+const submitComment = async (pid, comment) => {
+    try {
+        const commentData = {
+            comment: comment
+        };
 
+        const options = {
+            method: "POST",
+            body: JSON.stringify(commentData),
+            headers: { "Content-Type": "application/json" }
+        };
+    
+        const response = await fetch(
+            `http://localhost:3000/posts/${pid}/comments`,
+            options
+        );
+    
+        const json = await response.json();
+    
+        resetCommentForm();
+        renderSinglePost(json);
+        updateCommentCount(json);
+        
+    } catch (err) {
+        console.error(err);
+    }
+};
 
+const APIKEY = "TLvi8tf9k2z6WmKQm73BO1RIXRoaZzmL";
 const getGiphs = async (e) => {
     e.preventDefault();
     const searchTerm = e.target.searchTerm.value.trim();
@@ -59,12 +89,10 @@ const getGiphs = async (e) => {
     const gifArr = json.data;
     let modalBody = document.querySelector("#giphy-body");
     modalBody.innerHTML = ''
-    renderGif(gifArr);
+    setGif(gifArr);
     
 };
 
 module.exports = {
-    getAllPosts,
-    submitPost,
-    getGiphs
-}
+    getAllPosts, submitPost, submitComment, getGiphs
+};
