@@ -160,9 +160,10 @@ function renderSinglePost(postData){
         reactionBtns[i].parentElement.removeChild(reactionBtns[i]);
     }
 
+    let commentsSection = tags.nextElementSibling;
     reactionBtns = renderReactions(postData);
     Array.from(reactionBtns).forEach(button => {
-        tags.insertAdjacentElement('afterend', button);
+        commentsSection.insertAdjacentElement('beforebegin', button);
     });
   
     // comments
