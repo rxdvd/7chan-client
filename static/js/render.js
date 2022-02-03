@@ -254,7 +254,7 @@ function commentsBtnHandler(e){
 }
 
 async function getPostData(pid, callback){
-    let response = await fetch(`https://coderunner-blog.herokuapp.com/posts/${pid}`);
+    let response = await fetch(`http://localhost:3000/posts/${pid}`);
     let data = await response.json();
     callback(data);
 }
@@ -263,5 +263,5 @@ module.exports = {
     renderPostGiph, renderGiphyResult, giphClickHandler, 
     renderPostBody, renderSinglePost, renderDateString,
     renderReactions, renderReactionBtn, reactionBtnHandler,
-    generateUID, submitReaction
+    generateUID, submitReaction, renderComment, getPostData
 };
