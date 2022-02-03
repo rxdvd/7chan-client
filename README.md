@@ -65,7 +65,7 @@ To design the web client we first found reference material by looking for websit
 - [x] New posts display in the wrong order.
 - [x] Sorting by oldest and newest shows posts in reverse order.
 - [x] Changing page doesn't scroll to top of page.
-- [ ] Selecting a gif makes it disappear.
+- [x] Selecting a gif makes it disappear.
 
 ## Pitfalls & Discoveries
 
