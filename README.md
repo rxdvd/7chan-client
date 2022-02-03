@@ -67,6 +67,10 @@ To design the web client we first found reference material by looking for websit
 - [x] Sorting by oldest and newest shows posts in reverse order.
 - [x] Changing page doesn't scroll to top of page.
 - [x] Selecting a gif makes it disappear.
+- [x] Emoji reactions on single post display in reverse order.
+- [x] Posting a comment doesn't update comment count.
+- [x] Text area can be resized.
+- [x] Line breaks not showing up on posts and comments.
 
 ## Pitfalls & Discoveries
 

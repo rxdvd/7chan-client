@@ -48,7 +48,7 @@
                         <form id="comment-form">
                             <div class="mb-3">
                                 <label for="comment-form-message" class="form-label fw-bold">Post a comment:</label>
-                                <textarea class="form-control" id="commentFormMessage" name="message" placeholder="Leave a comment..." rows="3"></textarea>
+                                <textarea class="form-control" id="comment-form-message" name="message" placeholder="Leave a comment..." rows="3"></textarea>
                                 <div class="small text-muted">420 characters remaining</div>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -72,10 +72,37 @@
             </form>
             <div id="giphy-body" class="modal-body">
                 <img class="giphy-preview mb-2" draggable="false" src="https://media0.giphy.com/media/enNk8yXXpDHYzD3tqF/200w_d.gif?cid=5c2583098j8m18kl0gh9xq3wv558ovtq7d8ykr71wna9ycwg&rid=200w_d.gif&ct=g">
-                <img class="giphy-preview mb-2" draggable="false" src="https://media0.giphy.com/media/d3erWmTEGXoiYVgY/200w_d.gif?cid=5c2583098j8m18kl0gh9xq3wv558ovtq7d8ykr71wna9ycwg&rid=200w_d.gif&ct=g">
-                <img class="giphy-preview mb-2" draggable="false" src="https://media1.giphy.com/media/P98EoXDJpxCxtVi5tp/200w_d.gif?cid=5c2583098j8m18kl0gh9xq3wv558ovtq7d8ykr71wna9ycwg&rid=200w_d.gif&ct=g">
-                <img class="giphy-preview mb-2" draggable="false" src="https://media4.giphy.com/media/26BGAVqzpotuwsMvu/200w_d.gif?cid=5c2583098j8m18kl0gh9xq3wv558ovtq7d8ykr71wna9ycwg&rid=200w_d.gif&ct=g">
-                <img class="giphy-preview mb-2" draggable="false" src="https://media2.giphy.com/media/Q86fjhlLSSABfKOAzB/200w_d.gif?cid=5c2583098j8m18kl0gh9xq3wv558ovtq7d8ykr71wna9ycwg&rid=200w_d.gif&ct=g">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- about modal -->
+    <div id="about" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h3>About</h3>
+            </div>
+            <div class="modal-body">
+                <!-- Info box -->
+                <section id="info-box">
+                    <h5>What is this site?</h5>
+                    <p class="px-3 pb-2 mb-3">
+                        This platform is primarily for coders to anonymously share their experiences with other coders around the world. <br/>
+                        We hope to provide a place for coders to just relax and know that they're not alone with their bugs.
+                    </p>
+                    <h5>What can I share?</h5>
+                    <p class="px-3 pb-2 mb-3">
+                        You can ask questions, share tips or just talk about something relatable that happened to you or someone you know. Feel free to decorate your posts with a GIF!
+                    </p>
+                    <h5>Who made this site?</h5>
+                    <p class="px-3 pb-2 mb-1">
+                        This was a collaborative group project as part of lap 1 of the training course at <a href="https://www.getfutureproof.co.uk/" target="_blank">Futureproof</a>. The project was developed in the span of 1 week from planning to execution to debugging.
+                    </p>
+                </section>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -90,8 +117,8 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Github</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about" data-bs-toggle="modal" data-bs-target="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://github.com/rxdvd/coderunner-client" target="_blank">Github</a></li>
                 </ul>
             </div>
         </div>
@@ -112,15 +139,6 @@
         <div id="content" class="row">
             <div class="col-lg-3"></div>
             <div class="col-lg-6">
-                <!-- Info box -->
-                <section id="info-box" class="card mb-3">
-                    <div class="card-header">What can I share?</div>
-                    <div class="card-body">
-                        This platform is primarily for coders to anonymously share their experiences with other coders around the world. 
-                        You can ask questions, share tips or just talk about something relatable that happened to you or someone you know. 
-                        We hope to provide a place for coders to just relax and know that they're not alone with their bugs.
-                    </div>
-                </section>
                 <!-- Form -->
                 <form id="post-form" class="card mb-3 p-4">
                     <h2>What's on your mind?</h2>
