@@ -341,9 +341,12 @@ const submitComment = async (e) => {
     
         const json = await response.json();
     
-        //create function that appends comments data in specified format created
         renderSinglePost(json)
-        commentForm.reset()
+        commentForm.reset();
+
+        // update comment count
+        const commentBtn = document.querySelector(`button[href='#!'][data-pid='${pid}']`);
+        commentBtn.textContent = `Comments (${json.comments.length})`;
     } catch (err) {
         console.error(err);
     }

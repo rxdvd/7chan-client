@@ -68,6 +68,8 @@ To design the web client we first found reference material by looking for websit
 - [x] Changing page doesn't scroll to top of page.
 - [x] Selecting a gif makes it disappear.
 - [x] Emoji reactions on single post display in reverse order.
+- [x] Posting a comment doesn't update comment count.
+- [x] Text area can be resized.
 
 ## Pitfalls & Discoveries
 
