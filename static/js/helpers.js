@@ -1,4 +1,4 @@
-const { renderPostGiph, renderPostBody, renderGiphyResult, giphClickHandler } = require("./render");
+const { renderPostGiph, renderPostBody, renderGiphyResult } = require("./render");
 
 // Posts
 function setPost(posts, page, perPage) {
