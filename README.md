@@ -21,7 +21,7 @@ Client-side for group project working on an anonymous community journaling websi
 
 ### Deployment
 
-This client is currently deployed at https://goofy-keller-23f686.netlify.app/
+This client is currently deployed at https://coderunners.netlify.app/
 
 ## Project Goal
 
@@ -38,7 +38,10 @@ To design the web client we first found reference material by looking for websit
 
 ### References
 
-<!-- list of reference websites -->
+* [Everyday Sexism Project 🔗](https://everydaysexism.com/)
+* [Twitter 🔗](https://twitter.com/)
+* [Reddit 🔗](https://www.reddit.com/)
+* [The Guardian 🔗](https://www.theguardian.com/)
 
 ### Technologies
 
@@ -52,11 +55,22 @@ To design the web client we first found reference material by looking for websit
 
 ## Changelog
 
-
+* Remaining character count under message input fields.
+* Sort posts by newest, oldest, most reactions.
+* Searchable tags on posts containing keywords
+* Can remove selected gif after selecting.
 
 ## Fixed Bugs
 
-
+- [x] Date display on posts showing the wrong time.
+- [x] New posts display in the wrong order.
+- [x] Sorting by oldest and newest shows posts in reverse order.
+- [x] Changing page doesn't scroll to top of page.
+- [x] Selecting a gif makes it disappear.
+- [x] Emoji reactions on single post display in reverse order.
+- [x] Posting a comment doesn't update comment count.
+- [x] Text area can be resized.
+- [x] Line breaks not showing up on posts and comments.
 
 ## Pitfalls & Discoveries
 

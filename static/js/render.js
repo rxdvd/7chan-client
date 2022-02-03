@@ -5,10 +5,13 @@ function renderDateString(timestamp){
         "May", "June", "July", "August", "September",
         "October", "November", "December"
     ];
-    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${(date.getHours() % 12) + 1}:${("00" + date.getMinutes()).slice(-2)} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
+    let hours = date.getHours() % 12;
+    if(hours === 0) hours = 12;
+    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} ${hours}:${("00" + date.getMinutes()).slice(-2)} ${date.getHours() > 11 ? 'PM' : 'AM'}`;
 }
 
-function renderGiph(postData){
+// Giphy
+function renderPostGiph(postData){
     let gifContainer = document.createElement("a");
     let gif = document.createElement("img");
 
@@ -24,26 +27,185 @@ function renderGiph(postData){
     return gifContainer;
 }
 
+function renderGiphyResult(gifData){
+    let img = document.createElement("img");
+    img.classList.add("giphy-preview", "mb-2");
+    img.src = gifData.images.fixed_width_downsampled.url;
+    img.addEventListener("click", giphClickHandler);
+    return img;
+}
+
+function giphClickHandler(e){
+  let selectedGif = e.target;
+  const formImg = document.querySelector(".removable-gif > img");
+  const giphyInput = document.querySelector("#giphy-input");
+
+  formImg.src = selectedGif.src;
+  giphyInput.value = selectedGif.src;
+
+  formImg.parentElement.classList.remove("d-none");
+
+  const closeBtn = document.querySelector("#giphy-body + .modal-footer > button");
+  closeBtn.click();
+};
+
+// Reactions
 function renderReactions(postData){
     let reactionBtns = [
-        ['👍', 'thumbs_up'],
-        ['👎', 'thumbs_down'],
-        ['❤', 'heart']
+        'thumbs_up', 'thumbs_down', 'heart'
     ].map(emoji => {
-        let btn = document.createElement('button');
-        btn.classList.add('btn');
-        if(localStorage.uid && postData.reactions[emoji[1]].includes(localStorage.uid)) {
-            btn.classList.add('btn-dark');
-        }else{
-            btn.classList.add('btn-light');
-        }
-        btn.textContent = `${postData.reactions[emoji[1]].length} ${emoji[0]}`;
-        return btn;
+        return renderReactionBtn(postData, emoji);
     });
 
     return reactionBtns;
 }
 
+function renderReactionBtn(postData, emoji){
+    let btn = document.createElement('button');
+    btn.classList.add('btn');
+    if(localStorage.uid && postData.reactions[emoji].includes(localStorage.uid)) {
+        btn.classList.add('btn-dark');
+    }else{
+        btn.classList.add('btn-light');
+    }
+    btn.dataset.pid = postData.pid;
+    btn.dataset.emoji = emoji;
+    btn.addEventListener('click', reactionBtnHandler);
+
+    let reactions = {
+        thumbs_up: '👍',
+        thumbs_down: '👎',
+        heart: '❤'
+    };
+    btn.textContent = `${postData.reactions[emoji].length} ${reactions[emoji]}`;
+
+    return btn;
+}
+
+function reactionBtnHandler(e){
+    if(!localStorage.uid) {
+        localStorage.uid = generateUID();
+    }
+
+    submitReaction(
+        e.target.dataset.pid,
+        e.target.dataset.emoji,
+        localStorage.uid
+    );
+}
+
+async function submitReaction(pid, emoji, uid){
+    try {
+        const reqBody = {
+            emoji: emoji,
+            uid: uid
+        };
+
+        const reqOptions = {
+            method: "PATCH",
+            body: JSON.stringify(reqBody),
+            headers: { "Content-Type": "application/json" }
+        };
+
+        const response = await fetch(`http://localhost:3000/posts/${pid}/emoji`, reqOptions);
+
+        const data = await response.json();
+        
+        const reactionBtns = document.querySelectorAll(`.btn[data-pid='${pid}'][data-emoji='${emoji}']`);
+        reactionBtns.forEach(btn => {
+            let newBtn = renderReactionBtn(data, emoji);
+            btn.parentElement.replaceChild(newBtn, btn);
+        });
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+function generateUID(){
+    let uid = "";
+    while(uid.length < 10){
+        uid += Math.floor(Math.random() * 10);
+    }
+    return uid;
+}
+
+// Single post display
+function renderSinglePost(postData){
+    const content = document.querySelector("#single-post .modal-content");
+  
+    // modal header
+    let title = content.querySelector(".modal-header > .modal-title");
+    title.textContent = postData.title;
+
+    // gif
+    let gif = content.querySelector("#single-post-gif");
+    if(postData.giphy) {
+        gif.src = postData.giphy;
+        gif.classList.remove("d-none");
+    } else {
+        gif.classList.add("d-none");
+    }
+    
+    // timestamp
+    let timestamp = content.querySelector("#single-post-timestamp");
+    timestamp.textContent = renderDateString(postData.timestamp);
+
+    // message
+    let message = content.querySelector("#single-post-msg");
+    message.textContent = postData.message;
+
+    // tags
+    let tags = content.querySelector("#single-post-tags");
+    tags.textContent = `Tags: ${postData.tags.join(", ")}`;
+
+    // reactions
+    let reactionBtns = content.querySelectorAll(".modal-body > button");
+    for(let i = 0; i < reactionBtns.length; i++) {
+        reactionBtns[i].parentElement.removeChild(reactionBtns[i]);
+    }
+
+    let commentsSection = tags.nextElementSibling;
+    reactionBtns = renderReactions(postData);
+    Array.from(reactionBtns).forEach(button => {
+        commentsSection.insertAdjacentElement('beforebegin', button);
+    });
+  
+    // comments
+    let comments = content.querySelectorAll(".comment");
+    for(let i = 0; i < comments.length; i++) {
+        comments[i].parentElement.removeChild(comments[i]);
+    }
+    
+    let commentForm = content.querySelector("#comment-form");
+    commentForm.dataset.pid = postData.pid;
+
+    let commentsHeader = commentForm.previousElementSibling;
+    comments = postData.comments.map(renderComment);
+    comments.forEach(comment => {
+        commentsHeader.insertAdjacentElement('afterend', comment);
+    });
+}
+
+function renderComment(commentData){
+    let commentContainer = document.createElement("div");
+    commentContainer.classList.add("comment");
+
+    // timestamp
+    let time = document.createElement("span");
+    time.classList.add("comment-time", "small", "text-muted");
+    time.textContent = renderDateString(commentData.timestamp);
+    commentContainer.appendChild(time);
+
+    // comment
+    let commentBody = document.createElement("p");
+    commentBody.classList.add("comment-body", "px-4");
+    commentBody.textContent = commentData.comment;
+    commentContainer.appendChild(commentBody);
+
+    return commentContainer;
+}
+
+// Posts
 function renderPostBody(postData){
     let postBody = document.createElement("div");
     postBody.classList.add("card-body");
@@ -73,89 +235,17 @@ function renderPostBody(postData){
     commentsBtn.setAttribute('href', '#!');
     commentsBtn.setAttribute('data-bs-toggle', 'modal');
     commentsBtn.setAttribute('data-bs-target', '#single-post');
-    commentsBtn.setAttribute('data-pid', postData.pid);
+    commentsBtn.dataset.pid = postData.pid;
     commentsBtn.textContent = `Comments (${postData.comments.length})`;
     commentsBtn.addEventListener('click', commentsBtnHandler);
     postBody.appendChild(commentsBtn);
 
+    let tags = document.createElement("div");
+    tags.classList.add("small", "text-muted", "text-end");
+    tags.textContent = `Tags: ${postData.tags.join(", ")}`;
+    postBody.appendChild(tags);
+
     return postBody;
-}
-
-function renderComment(commentData){
-    let commentContainer = document.createElement("div");
-    commentContainer.classList.add("comment");
-
-    // timestamp
-    let time = document.createElement("span");
-    time.classList.add("comment-time", "small", "text-muted");
-    time.textContent = renderDateString(commentData.timestamp);
-    commentContainer.appendChild(time);
-
-    // comment
-    let commentBody = document.createElement("p");
-    commentBody.classList.add("comment-body", "px-4");
-    commentBody.textContent = commentData.comment;
-    commentContainer.appendChild(commentBody);
-
-    return commentContainer;
-}
-
-function renderComments(postData){
-    // comments
-    let comments = postData.comments.map(renderComment);
-
-    return comments;
-}
-
-function renderSinglePost(postData){
-    const content = document.querySelector("#single-post .modal-content");
-  
-    // modal header
-    let title = content.querySelector(".modal-header > .modal-title");
-    title.textContent = postData.title;
-
-    // gif
-    let gif = content.querySelector("#single-post-gif");
-    if(postData.giphy) {
-        gif.src = postData.giphy;
-        gif.classList.remove("d-none");
-    } else {
-        gif.classList.add("d-none");
-    }
-    
-    // timestamp
-    let timestamp = content.querySelector("#single-post-timestamp");
-    timestamp.textContent = renderDateString(postData.timestamp);
-
-    // message
-    let message = content.querySelector("#single-post-msg");
-    message.textContent = postData.message;
-
-    // reactions
-    let reactionBtns = content.querySelectorAll(".modal-body > button");
-    for(let i = 0; i < reactionBtns.length; i++) {
-        reactionBtns[i].parentElement.removeChild(reactionBtns[i]);
-    }
-
-    reactionBtns = renderReactions(postData);
-    Array.from(reactionBtns).forEach(button => {
-        message.insertAdjacentElement('afterend', button);
-    });
-  
-    // comments
-    let comments = content.querySelectorAll(".comment");
-    for(let i = 0; i < comments.length; i++) {
-        comments[i].parentElement.removeChild(comments[i]);
-    }
-
-    let commentForm = document.getElementById("comment-form");
-    comments = renderComments(postData);
-    comments.forEach(comment => {
-        commentForm.insertAdjacentElement('beforebegin', comment);
-    });
-
-    // form
-    form.message.value = "";
 }
 
 function commentsBtnHandler(e){
@@ -170,5 +260,8 @@ async function getPostData(pid, callback){
 }
 
 module.exports = {
-    renderGiph, renderPostBody, renderComments
+    renderPostGiph, renderGiphyResult, giphClickHandler, 
+    renderPostBody, renderSinglePost, renderDateString,
+    renderReactions, renderReactionBtn, reactionBtnHandler,
+    generateUID, submitReaction
 };

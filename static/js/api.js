@@ -1,12 +1,17 @@
-const { setPost, appendPost, renderGif } = require("./helpers");
+const { 
+    setPost, appendPost, setGif, sortPosts, 
+    filterPosts, updateCommentCount, resetCommentForm 
+} = require("./helpers");
 
-const APIKEY = "TLvi8tf9k2z6WmKQm73BO1RIXRoaZzmL";
+const { renderSinglePost } = require("./render");
 
-const getAllPosts = async () => {
+const getAllPosts = async (opts) => {
     try {
         const response = await fetch("https://coderunner-blog.herokuapp.com/posts");
-        const data = await response.json();
-        setPost(data); // function that iterates through post data
+        let data = await response.json();
+        sortPosts(data, opts.sortBy);
+        data = filterPosts(data);
+        setPost(data, opts.page, opts.perPage); // function that iterates through post data
     } catch (err) {
         console.error(err);
     }
@@ -14,12 +19,17 @@ const getAllPosts = async () => {
 
 const submitPost = async (e) => {
     e.preventDefault();
-  
+    
+    const form = e.target
+    let tags = e.target.tags.value;
+    tags = tags.length ? tags.split(",").map(tag => tag.trim()) : [];
+
     try {
         const postData = {
             title: e.target.title.value,
             message: e.target.message.value,
             giphy: e.target.giphy.value,
+            tags: tags
         };
 
         const options = {
@@ -32,27 +42,23 @@ const submitPost = async (e) => {
 
         const json = await response.json();
 
-        appendPost(json); //create function that appends data in specified format created
+        appendPost(json); 
+        form.reset()
     } catch (err) {
         console.error(err);
     }
 };
 
-const submitComment = async (e) => {
-    e.preventDefault();
-  
-    // pass post id through and use as url param
-    const pid = e.target.value;
+const submitComment = async (pid, comment) => {
     try {
         const commentData = {
-            message: e.target.value,
-            time: e.target.value, // create function that get time of request
+            comment: comment
         };
-    
+
         const options = {
             method: "POST",
             body: JSON.stringify(commentData),
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json" }
         };
     
         const response = await fetch(
@@ -62,12 +68,16 @@ const submitComment = async (e) => {
     
         const json = await response.json();
     
-        appendComments(json); //create function that appends comments data in specified format created
+        resetCommentForm();
+        renderSinglePost(json);
+        updateCommentCount(json);
+        
     } catch (err) {
         console.error(err);
     }
 };
 
+const APIKEY = "TLvi8tf9k2z6WmKQm73BO1RIXRoaZzmL";
 const getGiphs = async (e) => {
     e.preventDefault();
     const searchTerm = e.target.searchTerm.value.trim();
@@ -79,13 +89,10 @@ const getGiphs = async (e) => {
     const gifArr = json.data;
     let modalBody = document.querySelector("#giphy-body");
     modalBody.innerHTML = ''
-    renderGif(gifArr);
+    setGif(gifArr);
     
 };
 
 module.exports = {
-    getAllPosts,
-    submitPost,
-    submitComment,
-    getGiphs
-}
+    getAllPosts, submitPost, submitComment, getGiphs
+};
