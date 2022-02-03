@@ -60,4 +60,95 @@
             expect(element.children[1].classList.contains('card-body')).toBe(true);
         });
     });
+
+    describe('clearPosts', () => {
+        document.documentElement.innerHTML = '<div id="container"><div class="post"></div><div class="post"></div><div class="post"></div></div>';
+        let container = document.querySelector("#container");
+        helpers.clearPosts();
+
+        it('removes all posts', () => {
+            expect(container.children).toHaveLength(0);
+        });
+    });
+
+    describe.skip('sortPosts', () => {
+        let stub = [
+            {
+                timestamp: 0,
+                reactions: {
+                    thumbs_up: [1, 2, 3],
+                    thumbs_down: [2],
+                    heart: []
+                }
+            },
+            {
+                timestamp: 1,
+                reactions: {
+                    thumbs_up: [1, 2, 3, 4],
+                    thumbs_down: [1, 2, 3, 4],
+                    heart: [1, 2, 3, 4]
+                }
+            },
+            {
+                timestamp: 2,
+                reactions: {
+                    thumbs_up: [1, 2],
+                    thumbs_down: [1, 2, 3, 4],
+                    heart: [1]
+                }
+            }
+        ];
+        it('sorts by newest', () => {
+            helpers.sortPosts(stub, 'new');
+            expect(stub[0].timestamp).toBe(2);
+        });
+        it('sorts by oldest', () => {
+            helpers.sortPosts(stub, 'old');
+            expect(stub[0].timestamp).toBe(0);
+        });
+        it('sorts by most reactions', () => {
+            helpers.sortPosts(stub, 'emoji');
+            expect(stub[0].timestamp).toBe(1);
+        });
+    });
+
+    describe('filterPosts', () => {
+
+    });
+
+    describe('countReactions', () => {
+
+    });
+
+    describe('appendGif', () => {
+
+    });
+
+    describe('resetCommentForm', () => {
+
+    });
+
+    describe('updateCommentCount', () => {
+
+    });
+
+    describe('clearPagination', () => {
+
+    });
+
+    describe('updatePagination', () => {
+
+    });
+
+    describe('getPaginationInfo', () => {
+
+    });
+
+    describe('parseURLQuery', () => {
+
+    });
+
+    describe('updateHistory', () => {
+
+    });
  });
