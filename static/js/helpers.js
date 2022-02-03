@@ -96,6 +96,7 @@ const addGif = (e) => {
   formImg.src = selectedGif.src;
   const giphyInput = document.querySelector("#giphy-input");
   giphyInput.value = selectedGif.src;
+  formImg.parentElement.classList.remove("d-none");
   const closeBtn = document.querySelector("#giphy-body + .modal-footer > button");
   closeBtn.click();
 };

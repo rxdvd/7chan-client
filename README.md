@@ -58,6 +58,7 @@ To design the web client we first found reference material by looking for websit
 * Remaining character count under message input fields.
 * Sort posts by newest, oldest, most reactions.
 * Searchable tags on posts containing keywords
+* Can remove selected gif after selecting.
 
 ## Fixed Bugs
 
