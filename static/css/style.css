@@ -19,3 +19,7 @@ body {
 textarea {
     resize: none;
 }
+
+.comment-body, p.card-text, #single-post-msg {
+    white-space: pre-line;
+}
