@@ -196,5 +196,7 @@ function updateHistory(pageInfo){
 module.exports = {
   setPost, appendPost, setGif, parseURLQuery, 
   getPaginationInfo, sortPosts, filterPosts, 
-  updateHistory, updateCommentCount, resetCommentForm
+  updateHistory, updateCommentCount, resetCommentForm,
+  clearPosts, countReactions, appendGif, clearPagination,
+  updatePagination
 };

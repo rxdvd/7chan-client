@@ -5,7 +5,7 @@
 const render = require("../static/js/render");
 const giphyData = require("./giphy_sample.json");
 
-describe.skip('render functions', () => {
+describe('render functions', () => {
     const testData = {
         "pid": "6",
         "title": "Testing with jest",
