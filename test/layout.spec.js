@@ -6,7 +6,7 @@ const fs = require('fs');
 const { TestWatcher, SearchSource } = require('jest');
 const html = fs.readFileSync(require.resolve('../index.html'), 'utf8');
 
-describe('index.html', () => {
+describe.skip('index.html', () => {
     beforeEach(() => {
         document.documentElement.innerHTML = html.toString();
     })
