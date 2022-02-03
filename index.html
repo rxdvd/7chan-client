@@ -27,9 +27,9 @@
                         Coding can be stressful sometimes when it feels like you're getting nowhere and at times like that I think it can be helpful to take a break and come back to it later with a clear mind. Have a nice day everyone.
                     </p>
                     <div id="single-post-tags" class="small text-muted mb-2">Tags: javascript, python, html</div>
-                    <button class="btn btn-dark">6 👍</button>
-                    <button class="btn btn-light">0 👎</button>
-                    <button class="btn btn-light">3 ❤</button>
+                    <button class="btn btn-dark" data-pid="1" data-emoji="thumbs_up">6 👍</button>
+                    <button class="btn btn-light" data-pid="1" data-emoji="thumbs_down">0 👎</button>
+                    <button class="btn btn-light" data-pid="1" data-emoji="heart">3 ❤</button>
                     <div class="pt-3">
                         <h5 class="modal-title mb-2">Comments</h5>
                         <div class="comment mb-2">
@@ -138,8 +138,9 @@
                         <input id="post-form-tags" type="text" name="tags" class="form-control" placeholder="e.g. javascript, python, html, etc." autocomplete="off">
                     </div>
                     <div class="mb-3">
-                        <div class= "removable-gif">   
-                            <img class="giphy-thumbnail mb-2" draggable="false" src="https://media0.giphy.com/media/d3erWmTEGXoiYVgY/100.gif?cid=5c2583098j8m18kl0gh9xq3wv558ovtq7d8ykr71wna9ycwg&rid=100.gif&ct=g">
+                        <div class="removable-gif d-none">   
+                            <img class="giphy-thumbnail mb-2" draggable="false" src="">
+                            <button id="gif-remove-btn" type="button" class="btn-close" aria-label="Close"></button>
                         </div>
                         <br/>
                         <input type="hidden" id="giphy-input" name="giphy" value="">
@@ -165,47 +166,35 @@
                         <div class="small text-muted">January 1, 2022 9:22 AM</div>
                         <h2 class="card-title">Reminder to take a break.</h2>
                         <p class="card-text">Coding can be stressful sometimes when it feels like you're getting nowhere and at times like that I think it can be helpful to take a break and come back to it later with a clear mind. Have a nice day everyone.</p>
-                        <button class="btn btn-dark">6 👍</button>
-                        <button class="btn btn-light">0 👎</button>
-                        <button class="btn btn-light">3 ❤</button>
-                        <a class="btn btn-outline-secondary" href="#!" data-bs-toggle="modal" data-bs-target="#single-post">Comments (2)</a>
-                    </div>
-                </article>
-                <article class="post card mb-3">
-                    <a href="#!"><img class="card-img-top" src="https://media4.giphy.com/media/WWnRkIRgZKm8o/giphy.gif?cid=e826c9fc5cad77cad0dd5681f2775f0492a9f279c308cd1e&rid=giphy.gif&ct=g" alt="Image from Giphy" /></a>
-                    <div class="card-body">
-                        <div class="small text-muted">January 1, 2022 3:34 AM</div>
-                        <h2 class="card-title">working on bugs at 3am be like</h2>
-                        <p class="card-text">Got about 50 tabs open right now with no answers can anyone help with some python 😔</p>
-                        <button class="btn btn-light">0 👍</button>
-                        <button class="btn btn-light">0 👎</button>
-                        <button class="btn btn-dark">8 ❤</button>
-                        <a class="btn btn-outline-secondary" href="#!" data-bs-toggle="modal" data-bs-target="#single-post">Comments (7)</a>
+                        <button class="btn btn-dark" data-pid="1" data-emoji="thumbs_up">6 👍</button>
+                        <button class="btn btn-light" data-pid="1" data-emoji="thumbs_down">0 👎</button>
+                        <button class="btn btn-light" data-pid="1" data-emoji="heart">3 ❤</button>
+                        <a class="btn btn-outline-secondary" href="#!" data-bs-toggle="modal" data-bs-target="#single-post" data-pid="1">Comments (2)</a>
                     </div>
                 </article>
                 <!-- Pagination-->
                 <nav id="pagination" aria-label="Pagination">
                     <ul class="pagination justify-content-center my-4">
                         <li class="page-item disabled">
-                            <a class="page-link" aria-disabled="true">Prev</a>
+                            <a class="page-link" aria-disabled="true" data-page="0">Prev</a>
                         </li>
                         <li class="page-item active" aria-current="page">
-                            <a class="page-link">1</a>
+                            <a class="page-link" data-page="1">1</a>
+                        </li>
+                        <li class="page-item d-none">
+                            <a class="page-link" data-page="2">2</a>
+                        </li>
+                        <li class="page-item d-none">
+                            <a class="page-link" data-page="3">3</a>
+                        </li>
+                        <li class="page-item d-none">
+                            <a class="page-link" data-page="4">4</a>
+                        </li>
+                        <li class="page-item d-none">
+                            <a class="page-link" data-page="5">5</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link">4</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link">5</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link">Next</a>
+                            <a class="page-link" data-page="2">Next</a>
                         </li>
                     </ul>
                 </nav>
