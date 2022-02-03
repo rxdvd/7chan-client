@@ -20,4 +20,16 @@ describe('api', () => {
         fetch.resetMocks();
     })
 
+    describe('requests', () => {
+        describe('get requests ', () => {
+
+            test('it makes a get request to /posts', () => {
+                api.getAllPosts()
+                expect(fetch.mock.calls[0][0]).toMatch(/posts$/)
+            })
+
+        });
+        
+    })
+
 })

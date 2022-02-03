@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "python -m http.server",
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --silent",
     "coverage": "jest --coverage",
     "dev": "concurrently \"watchify ./static/js/index.js -o bundle.js\" \"python -m http.server\"",
     "bundle": "browserify ./static/js/index.js > bundle.js"
