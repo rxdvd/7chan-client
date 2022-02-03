@@ -23,3 +23,7 @@ textarea {
 .comment-body, p.card-text, #single-post-msg {
     white-space: pre-line;
 }
+
+button {
+    margin-right: 0.3rem;
+}
