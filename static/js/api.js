@@ -17,6 +17,7 @@ const getAllPosts = async (opts) => {
 const submitPost = async (e) => {
     e.preventDefault();
     
+    const form = e.target
     let tags = e.target.tags.value;
     tags = tags.length ? tags.split(",").map(tag => tag.trim()) : [];
 
@@ -39,6 +40,7 @@ const submitPost = async (e) => {
         const json = await response.json();
 
         appendPost(json); //create function that appends data in specified format created
+        form.reset()
     } catch (err) {
         console.error(err);
     }

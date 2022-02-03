@@ -258,8 +258,6 @@ function commentsBtnHandler(e){
     let modalForm = document.getElementById("comment-form")
     let pid = e.target.getAttribute('data-pid');
     modalForm.setAttribute('data-pid', pid);
-    console.log('comments clicked')
-    console.log('now in modal')
     getPostData(pid, renderSinglePost);
 }
 
