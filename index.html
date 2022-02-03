@@ -74,7 +74,7 @@
                 <img class="giphy-preview mb-2" draggable="false" src="https://media0.giphy.com/media/enNk8yXXpDHYzD3tqF/200w_d.gif?cid=5c2583098j8m18kl0gh9xq3wv558ovtq7d8ykr71wna9ycwg&rid=200w_d.gif&ct=g">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="giph-close-btn">Close</button>
             </div>
             </div>
         </div>
@@ -89,17 +89,17 @@
             <div class="modal-body">
                 <!-- Info box -->
                 <section id="info-box">
-                    <h5>What is this site?</h5>
-                    <p class="px-3 pb-2 mb-3">
+                    <h5 id="info-modal-heading1">What is this site?</h5>
+                    <p class="px-3 pb-2 mb-3" id="info-modal-para1">
                         This platform is primarily for coders to anonymously share their experiences with other coders around the world. <br/>
                         We hope to provide a place for coders to just relax and know that they're not alone with their bugs.
                     </p>
-                    <h5>What can I share?</h5>
-                    <p class="px-3 pb-2 mb-3">
+                    <h5 id="info-modal-heading2">What can I share?</h5>
+                    <p class="px-3 pb-2 mb-3" id="info-modal-para2">
                         You can ask questions, share tips or just talk about something relatable that happened to you or someone you know. Feel free to decorate your posts with a GIF!
                     </p>
-                    <h5>Who made this site?</h5>
-                    <p class="px-3 pb-2 mb-1">
+                    <h5 id="info-modal-heading3">Who made this site?</h5>
+                    <p class="px-3 pb-2 mb-1" id="info-modal-para3">
                         This was a collaborative group project as part of lap 1 of the training course at <a href="https://www.getfutureproof.co.uk/" target="_blank">Futureproof</a>. The project was developed in the span of 1 week from planning to execution to debugging.
                     </p>
                 </section>
@@ -212,7 +212,7 @@
                             <a class="page-link" data-page="5">5</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" data-page="2">Next</a>
+                            <a class="page-link" id="Next_page"data-page="2">Next</a>
                         </li>
                     </ul>
                 </nav>
