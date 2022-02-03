@@ -1,9 +1,8 @@
 const { getAllPosts, submitPost, getGiphs } = require("./api");
-const { getPaginationInfo, getFilterOption, setFilterOption } = require("./helpers");
+const { getPaginationInfo, updateHistory } = require("./helpers");
 
-function pageLoadHandler(page, perPage, sortBy){
-    setFilterOption(sortBy);
-    getAllPosts(page, perPage, sortBy);
+function pageLoadHandler(e){
+    getAllPosts(getPaginationInfo());
 }
 
 function textareaHandler(e){
@@ -21,28 +20,32 @@ function giphySearchHandler(e){
 
 function paginationBtnHandler(e){
     let pageInfo = {
-        page: e.target.dataset.page,
-        perPage: getPaginationInfo().perPage
+        ...getPaginationInfo(),
+        page: e.target.dataset.page
     };
 
-    getAllPosts(pageInfo.page, pageInfo.perPage, getFilterOption());
-    
-    window.history.replaceState(
-        pageInfo, 
-        `Page ${pageInfo.page} - Coderunner`,
-        `?page=${pageInfo.page}&perPage=${pageInfo.perPage}`
-    );
+    getAllPosts(pageInfo);
+    updateHistory(pageInfo);
 
     const sortBy = document.querySelector("#post-sort");
     sortBy.scrollIntoView();
 }
 
 function postSortHandler(e){
-    getAllPosts(
-        1,
-        getPaginationInfo().perPage,
-        e.target.value
-    );
+    let pageInfo = {
+        ...getPaginationInfo(),
+        page: 1,
+        sortBy: e.target.value
+    };
+    getAllPosts(pageInfo);
+    updateHistory(pageInfo);
+}
+
+function postFilterHandler(e){
+    if(e.key === 'Enter'){
+        e.preventDefault();
+        pageLoadHandler();
+    }
 }
 
 module.exports = {
@@ -51,5 +54,6 @@ module.exports = {
     pageLoadHandler,
     paginationBtnHandler,
     textareaHandler,
-    postSortHandler
+    postSortHandler,
+    postFilterHandler
 };

@@ -26,6 +26,7 @@
                     <p id="single-post-msg">
                         Coding can be stressful sometimes when it feels like you're getting nowhere and at times like that I think it can be helpful to take a break and come back to it later with a clear mind. Have a nice day everyone.
                     </p>
+                    <div id="single-post-tags" class="small text-muted mb-2">Tags: javascript, python, html</div>
                     <button class="btn btn-dark">6 👍</button>
                     <button class="btn btn-light">0 👎</button>
                     <button class="btn btn-light">3 ❤</button>
@@ -134,7 +135,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="post-form-tags" class="form-label">Tags (comma separated)</label>
-                        <input id="post-form-tags" type="text" name="tags" class="form-control" placeholder="javascript, python, html, etc." autocomplete="off">
+                        <input id="post-form-tags" type="text" name="tags" class="form-control" placeholder="e.g. javascript, python, html, etc." autocomplete="off">
                     </div>
                     <div class="mb-3">
                         <div class= "removable-gif">   
@@ -154,27 +155,8 @@
                         <option value="old">Oldest</option>
                         <option value="emoji">Most reactions</option>
                     </select>
-                    <label for="post-filter-select" class="form-label btn btn-primary" data-bs-toggle="collapse" data-bs-target="#post-filter-select">Filter by tag</label>
-                    <div id="post-filter-select" class="form-check collapse">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault">
-                            javascript
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">
-                            python
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">
-                            html
-                            </label>
-                        </div>
-                      </div>
+                    <label for="post-filter" class="form-label">Search tags (comma separated):</label>
+                    <input id="post-filter" type="search" name="tags" class="form-control" placeholder="e.g. javascript, python, html, etc." autocomplete="off">
                 </form>
                 <!-- User Posts-->
                 <article class="post card mb-3">

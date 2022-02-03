@@ -150,6 +150,10 @@ function renderSinglePost(postData){
     let message = content.querySelector("#single-post-msg");
     message.textContent = postData.message;
 
+    // tags
+    let tags = content.querySelector("#single-post-tags");
+    tags.textContent = `Tags: ${postData.tags.join(", ")}`;
+
     // reactions
     let reactionBtns = content.querySelectorAll(".modal-body > button");
     for(let i = 0; i < reactionBtns.length; i++) {
@@ -158,7 +162,7 @@ function renderSinglePost(postData){
 
     reactionBtns = renderReactions(postData);
     Array.from(reactionBtns).forEach(button => {
-        message.insertAdjacentElement('afterend', button);
+        tags.insertAdjacentElement('afterend', button);
     });
   
     // comments

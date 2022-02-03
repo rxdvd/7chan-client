@@ -57,7 +57,7 @@ To design the web client we first found reference material by looking for websit
 
 * Remaining character count under message input fields.
 * Sort posts by newest, oldest, most reactions.
-* Tags on posts with keywords
+* Searchable tags on posts containing keywords
 
 ## Fixed Bugs
 

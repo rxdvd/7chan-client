@@ -1,13 +1,14 @@
-const { setPost, appendPost, renderGif } = require("./helpers");
+const { setPost, appendPost, renderGif, sortPosts, filterPosts } = require("./helpers");
 
 const APIKEY = "TLvi8tf9k2z6WmKQm73BO1RIXRoaZzmL";
 
-const getAllPosts = async (page, perPage, sortBy='new') => {
+const getAllPosts = async (opts) => {
     try {
         const response = await fetch("http://localhost:3000/posts");
-        const data = await response.json();
-        setPost(data, page, perPage, sortBy); // function that iterates through post data
-        // generate tag checkboxes here
+        let data = await response.json();
+        sortPosts(data, opts.sortBy);
+        data = filterPosts(data);
+        setPost(data, opts.page, opts.perPage); // function that iterates through post data
     } catch (err) {
         console.error(err);
     }

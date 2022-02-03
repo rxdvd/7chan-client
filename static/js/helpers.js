@@ -32,12 +32,7 @@ function countReactions(postData){
   return count;
 }
 
-function setPost(posts, page, perPage, sortBy='new') {
-  clearPosts();
-  
-  let totalPages = Math.ceil(posts.length / perPage);
-  if(page > totalPages) page = 1;
-
+function sortPosts(posts, sortBy){
   posts.sort((a, b) => {
     switch(sortBy){
       case 'old':
@@ -47,6 +42,32 @@ function setPost(posts, page, perPage, sortBy='new') {
     }
     return a.timestamp - b.timestamp;
   });
+}
+
+function filterPosts(posts){
+  const filter = document.querySelector("#post-filter");
+  if(!filter.value.length) return posts;
+
+  const tags = filter.value.split(",")
+    .map(tag => tag.trim())
+    .filter(tag => tag.length);
+    
+  return posts.filter(post => {
+    // match all
+    for(let i = 0; i < tags.length; i++){
+      if(!post.tags.includes(tags[i])){
+        return false;
+      }
+    }
+    return true;
+  });
+}
+
+function setPost(posts, page, perPage) {
+  clearPosts();
+  
+  let totalPages = Math.ceil(posts.length / perPage);
+  if(page > totalPages || page < 1) page = 1;
 
   posts
     .slice((page - 1) * perPage, page * perPage)
@@ -100,31 +121,22 @@ function parseURLQuery(){
 
 function getPaginationInfo(){
   let query = parseURLQuery();
+  let sort = document.querySelector("#post-sort-select");
   return {
     page: parseInt(query.page) || 1,
     perPage: Math.max(1, parseInt(query.perPage)) || 5,
-    sortBy: query.sortBy || 'new'
+    sortBy: query.sortBy || sort.value
   }
 }
 
-function getFilterOption(){
-  let filter = document.querySelector("#post-sort-select");
-  return filter.value;
-}
-
-function setFilterOption(opt){
-  let filter = document.querySelector("#post-sort-select");
-  return filter.value = ['new', 'old', 'emoji'].includes(opt) ? opt : 'new';
-}
-
-function clearTags(){
-  //to-do
-}
-
-function generateTags(postsData){
-  //to-do: go through posts and put all tags in the taglist
+function updateHistory(pageInfo){
+  window.history.replaceState(
+    pageInfo, 
+    `Page ${pageInfo.page} - Coderunner`,
+    `?page=${pageInfo.page}&perPage=${pageInfo.perPage}`
+  );
 }
 
 module.exports = {
-  setPost, appendPost, renderGif, parseURLQuery, getPaginationInfo, getFilterOption,setFilterOption
+  setPost, appendPost, renderGif, parseURLQuery, getPaginationInfo, sortPosts, filterPosts, updateHistory
 };

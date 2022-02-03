@@ -1,4 +1,4 @@
-const { pageLoadHandler, giphySearchHandler, postSubmitHandler, paginationBtnHandler, textareaHandler, postSortHandler } = require("./handlers");
+const { pageLoadHandler, giphySearchHandler, postSubmitHandler, paginationBtnHandler, textareaHandler, postSortHandler, postFilterHandler } = require("./handlers");
 const { getPaginationInfo } = require("./helpers");
 
 function init() {
@@ -14,15 +14,18 @@ function init() {
   });
 
   const sortBy = document.querySelector("#post-sort-select");
+  sortBy.value = getPaginationInfo().sortBy;
   sortBy.addEventListener('change', postSortHandler);
+
+  const filter = document.querySelector("#post-filter");
+  filter.addEventListener('keypress', postFilterHandler);
 
   const pageBtns = document.querySelectorAll("#pagination > ul > li > a");
   pageBtns.forEach(pageBtn => {
     pageBtn.addEventListener('click', paginationBtnHandler);
   });
-  
-  const pageInfo = getPaginationInfo();
-  pageLoadHandler(pageInfo.page, pageInfo.perPage, pageInfo.sortBy);
+
+  pageLoadHandler();
 }
 
 init();
