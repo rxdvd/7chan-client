@@ -7,7 +7,7 @@ const { renderSinglePost } = require("./render");
 
 const getAllPosts = async (opts) => {
     try {
-        const response = await fetch("https://coderunner-blog.herokuapp.com/posts");
+        const response = await fetch(`http://localhost:3000/posts`);
         let data = await response.json();
         sortPosts(data, opts.sortBy);
         data = filterPosts(data);
@@ -38,7 +38,7 @@ const submitPost = async (e) => {
             headers: { "Content-Type": "application/json" },
         };
 
-        const response = await fetch("https://coderunner-blog.herokuapp.com/posts", options);
+        const response = await fetch(`http://localhost:3000/posts`, options);
 
         const json = await response.json();
 
@@ -62,7 +62,7 @@ const submitComment = async (pid, comment) => {
         };
     
         const response = await fetch(
-            `https://coderunner-blog.herokuapp.com/posts/${pid}/comments`,
+            `http://localhost:3000/posts/${pid}/comments`,
             options
         );
     
@@ -89,8 +89,8 @@ const getGiphs = async (e) => {
     const gifArr = json.data;
     let modalBody = document.querySelector("#giphy-body");
     modalBody.innerHTML = ''
-    setGif(gifArr);
-    
+    //setGif(gifArr);
+    if(!gifArr){return;}else{setGif(gifArr);}
 };
 
 module.exports = {
