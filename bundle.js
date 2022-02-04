@@ -8,7 +8,7 @@ const { renderSinglePost } = require("./render");
 
 const getAllPosts = async (opts) => {
     try {
-        const response = await fetch(`https://coderunner-blog.herokuapp.com/posts`);
+        const response = await fetch("https://coderunner-blog.herokuapp.com/posts");
         let data = await response.json();
         sortPosts(data, opts.sortBy);
         data = filterPosts(data);
