@@ -16,7 +16,7 @@ afterEach(() => {
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
-    json: () => Promise.resolve( () => {  }),
+    json: () => Promise.resolve( (res) => { gifs = res.body  }),
   })
 );
   
@@ -24,9 +24,10 @@ test('it makes a request to the giphy Api', async () => {
     const fakeEvent = {
     preventDefault: jest.fn(),
     target: {
-     searchTerm: {value: 'test_word_exit_abc_123'}
+     searchTerm: {value: 'hello'}
       }
      }
+
     const giphysent = await getGiphs(fakeEvent);
     expect(fetch).toHaveBeenCalledTimes(1);
 });

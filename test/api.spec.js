@@ -75,40 +75,7 @@ describe('api', () => {
                 expect(fetch).toHaveBeenCalled();
             })
 
-            // test.skip('it makes a request to the giphy Api', async () => {
-
-                
-            //     const fakeEvent = {
-            //         preventDefault: jest.fn(),
-            //         target: {
-            //             searchTerm: {value: 'hello'}
-            //         }
-            //     }
-            //     const hello = await api.getGiphs(fakeEvent)
-            //     expect(fetch).toHaveBeenCalled();
-            // })
-
-            global.fetch = jest.fn(() =>
-                Promise.resolve({
-                json: () => Promise.resolve( (res) => gifs = res.body  ),
-                })
-            );
-  
-
-            test('it makes a request to the giphy Api', async () => {
-
-
-            const fakeEvent = {
-            preventDefault: jest.fn(),
-            target: {
-             searchTerm: {value: 'hello'}
-             }
-            }
     
-            const giphysent = await getGiphs(fakeEvent);
-
-            expect(fetch).toHaveBeenCalledTimes(1);
-            });
         })
 
     })
