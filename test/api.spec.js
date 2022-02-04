@@ -75,7 +75,7 @@ describe('api', () => {
                 expect(fetch).toHaveBeenCalled();
             })
 
-            test.skip('it makes a request to the giphy Api', () => {
+            test.skip('it makes a request to the giphy Api', async () => {
 
                 
                 const fakeEvent = {
@@ -84,7 +84,7 @@ describe('api', () => {
                         searchTerm: {value: 'hello'}
                     }
                 }
-                api.getGiphs(fakeEvent)
+                const hello = await api.getGiphs(fakeEvent)
                 expect(fetch).toHaveBeenCalled();
             })
         })
