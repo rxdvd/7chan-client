@@ -263,5 +263,5 @@ module.exports = {
     renderPostGiph, renderGiphyResult, giphClickHandler, 
     renderPostBody, renderSinglePost, renderDateString,
     renderReactions, renderReactionBtn, reactionBtnHandler,
-    generateUID, submitReaction
+    generateUID, submitReaction, renderComment, getPostData
 };

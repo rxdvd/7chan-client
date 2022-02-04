@@ -42,8 +42,8 @@ describe('index.html', () => {
         it('has a defer property in the (first) script', () => {
             let script = document.querySelector('head script');
             expect(script).toBeTruthy();
-            console.log(script.attributes[1].name);
-            //expect(script.hasAttributes("defert")).toBeTrue; //it works but to finish off !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // console.log(script.attributes[1].name);
+            // expect(script.hasAttributes("defert")).toBeTrue;
             });
 
     });

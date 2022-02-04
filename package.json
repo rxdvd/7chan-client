@@ -6,7 +6,7 @@
   "scripts": {
     "start": "python -m http.server",
     "test": "jest --watchAll --silent",
-    "coverage": "jest --coverage",
+    "coverage": "jest --coverage --silent",
     "dev": "concurrently \"watchify ./static/js/index.js -o bundle.js\" \"python -m http.server\"",
     "bundle": "browserify ./static/js/index.js > bundle.js"
   },

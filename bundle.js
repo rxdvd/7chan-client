@@ -39,7 +39,7 @@ const submitPost = async (e) => {
             headers: { "Content-Type": "application/json" },
         };
 
-        const response = await fetch("https://coderunner-blog.herokuapp.com/posts", options);
+        const response = await fetch(`https://coderunner-blog.herokuapp.com/posts`, options);
 
         const json = await response.json();
 
@@ -90,8 +90,8 @@ const getGiphs = async (e) => {
     const gifArr = json.data;
     let modalBody = document.querySelector("#giphy-body");
     modalBody.innerHTML = ''
-    setGif(gifArr);
-    
+    //setGif(gifArr);
+    if(!gifArr){return;}else{setGif(gifArr);}
 };
 
 module.exports = {
@@ -180,7 +180,7 @@ function setPost(posts, page, perPage) {
 
   posts
     .slice((page - 1) * perPage, page * perPage)
-    .forEach(appendPost);
+    .reverse().forEach(appendPost);
 
   clearPagination();
   updatePagination(posts, page, perPage);
@@ -214,11 +214,11 @@ function sortPosts(posts, sortBy){
   posts.sort((a, b) => {
     switch(sortBy){
       case 'old':
-        return b.timestamp - a.timestamp;
+        return a.timestamp - b.timestamp;
       case 'emoji':
-        return countReactions(a) - countReactions(b);
+        return countReactions(b) - countReactions(a);
     }
-    return a.timestamp - b.timestamp;
+    return b.timestamp - a.timestamp;
   });
 }
 
@@ -367,7 +367,9 @@ function updateHistory(pageInfo){
 module.exports = {
   setPost, appendPost, setGif, parseURLQuery, 
   getPaginationInfo, sortPosts, filterPosts, 
-  updateHistory, updateCommentCount, resetCommentForm
+  updateHistory, updateCommentCount, resetCommentForm,
+  clearPosts, countReactions, appendGif, clearPagination,
+  updatePagination
 };
 
 },{"./render":5}],4:[function(require,module,exports){
@@ -412,6 +414,7 @@ function init() {
   pageLoadHandler();
 }
 
+window.API_HOST = "http://localhost:3000";
 init();
 
 },{"./handlers":2,"./helpers":3}],5:[function(require,module,exports){
@@ -680,7 +683,7 @@ module.exports = {
     renderPostGiph, renderGiphyResult, giphClickHandler, 
     renderPostBody, renderSinglePost, renderDateString,
     renderReactions, renderReactionBtn, reactionBtnHandler,
-    generateUID, submitReaction
+    generateUID, submitReaction, renderComment, getPostData
 };
 
 },{}]},{},[4]);

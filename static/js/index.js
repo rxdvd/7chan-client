@@ -39,4 +39,5 @@ function init() {
   pageLoadHandler();
 }
 
+window.API_HOST = "http://localhost:3000";
 init();
