@@ -89,8 +89,8 @@ const getGiphs = async (e) => {
     const gifArr = json.data;
     let modalBody = document.querySelector("#giphy-body");
     modalBody.innerHTML = ''
-    setGif(gifArr);
-    
+    //setGif(gifArr);
+    if(!gifArr){return;}else{setGif(gifArr);}
 };
 
 module.exports = {
