@@ -16,9 +16,9 @@ describe('api', () => {
         helper = require('../static/js/helpers')
     })
 
-    // afterEach(() => {
-    //     fetch.resetMocks();
-    // })
+    afterEach(() => {
+        fetch.resetMocks();
+    });
 
     describe('requests', () => {
         describe('get requests ', () => {
@@ -29,7 +29,7 @@ describe('api', () => {
             })
         });
 
-        describe('submitCountry', () => {
+        describe('submitPost', () => {
 
             test('it makes a post request to /posts with the post data', () => {
                 
