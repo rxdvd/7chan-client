@@ -16,9 +16,9 @@ describe('api', () => {
         helper = require('../static/js/helpers')
     })
 
-    afterEach(() => {
-        fetch.resetMocks();
-    })
+    // afterEach(() => {
+    //     fetch.resetMocks();
+    // })
 
     describe('requests', () => {
         describe('get requests ', () => {
@@ -75,18 +75,7 @@ describe('api', () => {
                 expect(fetch).toHaveBeenCalled();
             })
 
-            test.skip('it makes a request to the giphy Api', () => {
-
-                
-                const fakeEvent = {
-                    preventDefault: jest.fn(),
-                    target: {
-                        searchTerm: {value: 'hello'}
-                    }
-                }
-                api.getGiphs(fakeEvent)
-                expect(fetch).toHaveBeenCalled();
-            })
+    
         })
 
     })
