@@ -7,7 +7,7 @@ const { renderSinglePost } = require("./render");
 
 const getAllPosts = async (opts) => {
     try {
-        const response = await fetch("https://coderunner-blog.herokuapp.com/posts");
+        const response = await fetch(`${API_HOST}/posts`);
         let data = await response.json();
         sortPosts(data, opts.sortBy);
         data = filterPosts(data);
@@ -38,7 +38,7 @@ const submitPost = async (e) => {
             headers: { "Content-Type": "application/json" },
         };
 
-        const response = await fetch("https://coderunner-blog.herokuapp.com/posts", options);
+        const response = await fetch(`${API_HOST}/posts`, options);
 
         const json = await response.json();
 
@@ -62,7 +62,7 @@ const submitComment = async (pid, comment) => {
         };
     
         const response = await fetch(
-            `https://coderunner-blog.herokuapp.com/posts/${pid}/comments`,
+            `${API_HOST}/posts/${pid}/comments`,
             options
         );
     
