@@ -32,6 +32,8 @@ Build a website where users can anonymously post journal entries for other peopl
 * Message character limit
 * Add gifs to messages using giphy
 
+![gif of site in action](assets/hommer.gif)
+
 ## Design & Implementation
 
 To design the web client we first found reference material by looking for websites with a similar purpose to our project goal and then came up with layout ideas drawing from those references.
@@ -51,7 +53,9 @@ To design the web client we first found reference material by looking for websit
 
 ### Layout
 
-<!-- put design images here -->
+![Figma Design](assets/figma.png)
+
+Design made using [Figma 🔗](https://www.figma.com/)
 
 ## Changelog
 
@@ -74,15 +78,24 @@ To design the web client we first found reference material by looking for websit
 
 ## Pitfalls & Discoveries
 
-<!-- things you didn't know how to do, how you solved it i.e. any time you had to google -->
+* Could not get the GIF previews in the search box to stack properly. The aim was for them to be tiled in a masonry style layout but it wasn't able to work in way such that elements could simply be appended and stacked automatically.
+* You cannot pass the `.appendChild` method of an element directly into a function as the callback argument, it throws an illegal invocation error.
+* Learned about new methods to make manipulating the DOM easier including `Element.insertAdjacentElement` and `Element.replaceChild`.
+* An issue occurred where the JavaScript files being required were returning undefined. It turns out that the order that files are required is important for Browserify and functions cannot be required from files which require the file that it is being required from. This essentially gives the required file it's own scope in relation to the "parent".
+* Putting a newline character `\n` into the `.textContent` of an element doesn't show the newline by default. The CSS property `white-space: pre;` must be set for those newlines to show.
 
 ## Remaining Bugs
 
-
+- [ ] The form for submitting a post doesn't reset properly after posting a message.
+- [ ] Blank posts can be submitted but will be rejected by server.
+- [ ] Blank comments can be posted.
+- [ ] User ID number collision is still technically possible.
 
 ## Improvements & Future Features
 
-
+* Expand the search feature to not only search tags but message content.
+* Have the Giphy pop-up show trending GIFs on first load.
+* Live post updates so new posts can be shown without having to refresh the page.
 
 ## License
 
