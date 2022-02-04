@@ -50,6 +50,8 @@ To design the web client we first found reference material by looking for websit
 * HTML
 * CSS ([Bootstrap 🔗](https://getbootstrap.com/))
 * JavaScript
+* [Browserify 🔗](https://browserify.org/)
+* [Jest 🔗](https://jestjs.io/)
 
 ### Layout
 
