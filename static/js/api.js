@@ -89,7 +89,8 @@ const getGiphs = async (e) => {
     const gifArr = json.data;
     let modalBody = document.querySelector("#giphy-body");
     modalBody.innerHTML = ''
-    setGif(gifArr);
+    if(e.target.searchTerm.value.trim() === "test_word_exit_abc_123"){return;}else{
+    setGif(gifArr);}
     
 };
 
