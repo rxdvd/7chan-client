@@ -11,7 +11,7 @@ const getAllPosts = async (opts) => {
         let data = await response.json();
         sortPosts(data, opts.sortBy);
         data = filterPosts(data);
-        setPost(data, opts.page, opts.perPage); // function that iterates through post data
+        setPost(data, opts.page, opts.perPage); 
     } catch (err) {
         console.error(err);
     }
