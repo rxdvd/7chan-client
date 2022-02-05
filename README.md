@@ -88,7 +88,8 @@ Design made using [Figma 🔗](https://www.figma.com/)
 
 #### Testing: Pitfalls & Discoveries
 
-* Since an API request involves two promises, to test an API fetch request it is neccessary to define a mocked fetch function that handles both promises.
+* Since an API request involves two promises, to test an API fetch request it is neccessary to define a mocked fetch function that handles both promises being resolved.
+* In our test suite, testing that timestamps are generated correctly can fail if run in a timezone different from GMT+0.
 
 ## Remaining Bugs
 
