@@ -3,7 +3,6 @@
 */
 
 const fs = require('fs');
-const { TestWatcher, SearchSource } = require('jest');
 const html = fs.readFileSync(require.resolve('../index.html'), 'utf8');
 
 describe('index.html', () => {
@@ -42,8 +41,8 @@ describe('index.html', () => {
         it('has a defer property in the (first) script', () => {
             let script = document.querySelector('head script');
             expect(script).toBeTruthy();
-            // console.log(script.attributes[1].name);
-            // expect(script.hasAttributes("defert")).toBeTrue;
+            expect(script.hasAttribute("defer")).toBe(true); //Note that .toBeFalsy; does not fail the test 
+            expect(!script.hasAttribute("defer")).toBe(false); // Double checking that the test works
             });
 
     });
@@ -200,13 +199,6 @@ describe('index.html', () => {
 
         })
 
-        // test('to see if a button is present', () => {
-        //     const { getByTestId } = render(<Text />);
-        //     const buttonNav = getByTestId("button-nav");
-        //     expect(buttonNav).toBeInTheDocument();
-
-        // })
-
         test('has the heading of  About', () => {
             let aboutNav = document.querySelector("body nav div div ul li a[href='#about']");
             expect(aboutNav).toBeTruthy();
@@ -220,15 +212,6 @@ describe('index.html', () => {
             expect(githubNav.textContent).toBe('Github');
 
         })
-
-
-        
-        // test('has a dark background', () => {
-        //     const colourBgDark = '#f8f9fa'
-        //     let backgroundNav = document.querySelector('body nav[class="navbar-dark bg-dark"]');
-            
-        //     expect(backgroundNav).stylesheet(`background: ${colourBgDark}`);
-        // });
 
     });
 

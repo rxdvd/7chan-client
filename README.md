@@ -86,6 +86,11 @@ Design made using [Figma 🔗](https://www.figma.com/)
 * An issue occurred where the JavaScript files being required were returning undefined. It turns out that the order that files are required is important for Browserify and functions cannot be required from files which require the file that it is being required from. This essentially gives the required file it's own scope in relation to the "parent".
 * Putting a newline character `\n` into the `.textContent` of an element doesn't show the newline by default. The CSS property `white-space: pre;` must be set for those newlines to show.
 
+#### Testing
+
+* Since an API request involves two promises, to test an API fetch request it is neccessary to define a mocked fetch function that handles both promises being resolved.
+* In our test suite, testing that timestamps are generated correctly can fail if run in a timezone different from GMT+0.
+
 ## Remaining Bugs
 
 - [ ] The form for submitting a post doesn't reset properly after posting a message.
