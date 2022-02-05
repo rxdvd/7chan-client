@@ -47,7 +47,6 @@ describe('index.html', () => {
 
     });
 
-
     describe('single post modal', () => {
 
         test('has the heading with h5 tag in modal title', () => {
