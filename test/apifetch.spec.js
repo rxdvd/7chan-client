@@ -16,7 +16,7 @@ afterEach(() => {
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
-    json: () => Promise.resolve( (res) => { gifs = res.body  }),
+    json: () => Promise.resolve(() => { }),
   })
 );
   
