@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "python -m http.server",
+    "start": "http-server",
     "test": "jest --watchAll --silent",
     "coverage": "jest --coverage --silent",
-    "dev": "concurrently \"watchify ./static/js/index.js -o bundle.js\" \"python -m http.server\"",
+    "dev": "concurrently \"watchify ./static/js/index.js -o bundle.js\" \"http-server\"",
     "bundle": "browserify ./static/js/index.js > bundle.js"
   },
   "keywords": [],
@@ -19,5 +19,8 @@
     "jest": "^27.4.7",
     "jest-fetch-mock": "^3.0.3",
     "watchify": "^4.0.0"
+  },
+  "dependencies": {
+    "http-server": "^14.1.0"
   }
 }
